@@ -1,0 +1,208 @@
+<section class="py-16">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <!-- Heading -->
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl mb-2 font-semibold" style="color:{{ section.settings.heading_color }};font-Family:{{ section.settings.font_family }}">
+        {{ section.settings.heading }}
+      </h2>
+      <p class="mt-2 font-bold letter-space text-base md:text-lg" style="color:{{ section.settings.sub_heading_color }}; font-Family:{{ section.settings.font_family }}">
+        {{ section.settings.sub_heading }}
+      </p>
+    </div>
+
+    <!-- Mobile / Tablet → SLIDER -->
+    <div class="swiper">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide px-4">
+            <div class="flex flex-col items-center text-center space-y-4">
+              <img
+                src="{{ block.settings.card_image | image_url: width: 1000 }}"
+                class="rounded-md w-full h-[420px] object-cover"
+                width=""
+                height=""
+                alt="" />
+              <h3 class="text-xl font-semibold">{{ block.settings.card_title }}</h3>
+              <p class="text-gray-600 text-sm max-w-xs mx-auto">
+                {{ block.settings.card_description }}
+              </p>
+
+              {% if block.settings.button_label != blank %}
+                <a href="{{ block.settings.button_link }}" class="mt-2 border border-gray-800 rounded-md px-6 py-2 text-sm hover:bg-black hover:text-white transition">
+                  {{ block.settings.button_label }}
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+
+    <!-- Desktop → 3 Column Grid -->
+    <div class="desktop-grid grid grid-cols-3 gap-7">
+
+      {% for block in section.blocks %}
+        <div class="flex flex-col items-center text-center space-y-2">
+          <img
+            src="{{ block.settings.card_image | image_url: width: 1000 }}"
+            class=" w-full h-full mb-4 object-cover"
+            height=""
+            width=""
+            alt="" />
+          <h3 class="text-3xl font-semibold" style="font-Family:{{ block.settings.font_family2 }}">{{ block.settings.card_title }}</h3>
+          <p class="text-black text-sm max-w-xs mx-auto">
+            {{ block.settings.card_description }}
+          </p>
+
+          {% if block.settings.button_label != blank %}
+            <a href="{{ block.settings.button_link }}" class="mt-2 border border-gray-800 rounded-md px-14 py-3 text-sm hover:bg-black hover:text-white transition" style="font-Family:{{ block.settings.font_family2 }}">
+              {{ block.settings.button_label }}
+            </a>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Hide swiper slider on screens 768px and above */
+  @media (min-width: 768px) {
+    .swiper {
+      display: none !important;
+    }
+  }
+
+  /* Hide desktop grid on small screens */
+  @media (max-width: 767px) {
+    .desktop-grid {
+      display: none !important;
+    }
+  }
+</style>
+
+
+<!-- Swiper Initialization -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js" defer></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    new Swiper(".swiper", {
+      loop: true,
+      spaceBetween: 20,
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+      },
+      breakpoints: {
+        0: { slidesPerView: 1 },      
+        640: { slidesPerView: 1.15 }, 
+        1024: { slidesPerView: 3 }, 
+      }
+    });
+  });
+</script>
+
+
+{% schema %}
+  {
+    "name": "Vision Collection Cards",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Every Vision of you"
+      },{
+        "type": "color",
+        "id": "heading_color",
+        "label": "Heading color",
+        "default":"#D39D4E"
+      },
+      {
+  "type": "select",
+  "id": "font_family",
+  "label": "Font Family",
+  "options": [
+    { "value": "Outfit", "label": "Outfit" },
+    { "value": "Poppins", "label": "Poppins" },
+    { "value": "Inter", "label": "Inter" },
+    { "value": "Roboto", "label": "Roboto" },
+    { "value": "Montserrat", "label": "Montserrat" },
+    { "value": "Lato", "label": "Lato" }
+  ],
+  "default": "Outfit"
+},
+       {
+        "type": "text",
+        "id": "sub_heading",
+        "label": "Sub Heading",
+        "default": "It's always a good day to buy glasses online."
+      },{
+        "type": "color",
+        "id": "sub_heading_color",
+        "label": "Heading color",
+        "default":"#000000"
+      }
+
+    ],
+    "blocks": [
+      {
+        "type": "card",
+        "name": "Card",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "card_image",
+            "label": "Card Image"
+          },
+          {
+            "type": "text",
+            "id": "card_title",
+            "label": "Card Title",
+            "default": "Bohemia Renewal"
+          },
+          {
+            "type": "text",
+            "id": "card_description",
+            "label": "Card Description",
+            "default": "Earth-friendly and free-spirited eyewear for the modern bohemian."
+          },
+          {
+  "type": "select",
+  "id": "font_family2",
+  "label": "Font Family",
+  "options": [
+    { "value": "Outfit", "label": "Outfit" },
+    { "value": "Poppins", "label": "Poppins" },
+    { "value": "Inter", "label": "Inter" },
+    { "value": "Roboto", "label": "Roboto" },
+    { "value": "Montserrat", "label": "Montserrat" },
+    { "value": "Lato", "label": "Lato" }
+  ],
+  "default": "Outfit"
+},
+          {
+            "type": "text",
+            "id": "button_label",
+            "label": "Button Label",
+            "default": "Shop Now"
+          }, {
+            "type": "url",
+            "id": "button_link",
+            "label": "Button Link"
+          }
+        ]
+      }
+    ],
+    "max_blocks": 3,
+    "presets": [
+      {
+        "name": "Vision Collection Cards",
+        "category": "Image"
+      }
+    ]
+  }
+{% endschema %}

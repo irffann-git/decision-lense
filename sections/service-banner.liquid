@@ -1,0 +1,78 @@
+<section class="w-full h-16 py-4" style="background-color: {{ section.settings.bg-color }};">
+  <div class="max-w-7xl mx-auto flex flex-wrap justify-center items-center gap-6 text-sm text-gray-700">
+
+    {% for block in section.blocks %}
+      <a href="{{ block.settings.items_link }}">
+      <div class="flex px-5 items-center gap-3">
+
+        {% if block.settings.service_icon != blank %}
+          <img
+            src="{{ block.settings.service_icon | image_url: width: 40 }}"
+            width="32"
+            height="32"
+            alt="icon"
+            class=" h-full w-12 object-contain text-yellow-500">
+        {% endif %}
+
+        <span class=" text-sm font-semibold" style="color:{{ block.settings.text_color }}">
+          {{ block.settings.text }}
+        </span>
+      </div>
+      </a>
+
+      {% unless forloop.last %}
+        <span class="hidden md:block h-4 w-px bg-yellow-500"></span>
+      {% endunless %}
+    {% endfor %}
+
+  </div>
+</section>
+
+
+{% schema %}
+  {
+    "name": "Service Banner",
+    "settings": [
+      {
+        "type": "color",
+        "id": "bg-color",
+        "label": "bg color",
+        "default": "#F5F5F5"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "service_item",
+        "name": "Service Item",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "service_icon",
+            "label": "Service Icon"
+          }, {
+            "type": "text",
+            "id": "text",
+            "label": "Service Text",
+            "default": "Service Name"
+          },
+          {
+            "type": "url",
+            "id": "items_link",
+            "label": "URL"
+          },
+          {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default":"#6F6F6F"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Service Banner"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,119 @@
+<section class="page-width py-10">
+  {% paginate search.results by 8 %}
+
+    <!-- 🔍 Search Bar -->
+    <!-- 🔍 Search Bar -->
+    <div class="search-bar-wrapper">
+      <form
+        action="{{ routes.search_url }}"
+        method="get"
+        class="search-bar">
+        <input
+          type="search"
+          name="q"
+          placeholder="Search products..."
+          value="{{ search.terms | escape }}"
+          class="search-input">
+        <button type="submit" class="search-button">Search</button>
+      </form>
+    </div>
+
+
+    {% if search.performed %}
+      {% if search.results.size > 0 %}
+
+        <p class="text-center text-gray-600 mb-6 text-lg">
+          Showing
+          <span class="font-bold">{{ search.results.size }}</span>
+          results for
+          <span class="font-extrabold text-black">"{{ search.terms | escape }}"</span>
+        </p>
+
+        <div class="px-9 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {% for item in search.results %}
+            {% if item.object_type == 'product' %}
+              {% render 'product-card'
+                , product_product: item %}
+            {% endif %}
+          {% endfor %}
+        </div>
+
+      {% else %}
+        <div class="text-center py-20">
+          <h2 class="text-2xl font-semibold mb-4">No results found !</h2>
+          <p class="text-gray-600 mb-4">
+            No products match "<span class="font-bold">{{ search.terms | escape }}</span>"
+          </p>
+          <a href="{{ routes.all_products_collection_url }}" class="px-8 py-3 bg-yellow-500 text-black font-semibold rounded hover:bg-black hover:text-yellow-500 transition">
+            Browse Products
+          </a>
+        </div>
+      {% endif %}
+    {% endif %}
+
+    <!-- Pagination -->
+    <div class="mt-12">
+      {% render 'pagination'
+        , pagination: paginate %}
+    </div>
+
+  {% endpaginate %}
+</section>
+<style>
+  .search-bar-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .search-bar {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 14px 120px 14px 22px;
+    font-size: 18px;
+    border: 2px solid #EAB308;
+    /* yellow */
+    border-radius: 50px;
+    outline: none;
+    color: #333;
+  }
+
+  .search-input:focus {
+    border-color: #f5b800;
+    box-shadow: 0 0 6px rgba(245, 184, 0, 0.6);
+  }
+
+  .search-button {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: 600;
+    background: #EAB308;
+    /* yellow */
+    color: #000;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .search-button:hover {
+    background: #000000;
+    color: #EAB308;
+  }
+
+</style>
+
+{% schema %}
+  {
+    "name": "Main Search",
+    "settings": []
+  }
+{% endschema %}

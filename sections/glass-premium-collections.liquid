@@ -1,0 +1,328 @@
+<section class="category-banner">
+
+  <!-- Desktop -->
+  <div class="desktop-image">
+
+    <!-- IMAGE 1 -->
+    <a href="{{ section.settings.link_1 }}" class="image-block">
+      {% if section.settings.image_1 != blank %}
+        <img src="{{ section.settings.image_1 | image_url: width: 1200 }}" width="" height="" alt="{{ section.settings.title_1 }}">
+      {% else %}
+        {{ 'image' | placeholder_svg_tag }}
+      {% endif %}
+
+      <div class="image-overlay">
+        <h2 class="side-title left-title">
+          {{ section.settings.title_1 }}
+        </h2>
+      </div>
+    </a>
+
+    <!-- IMAGE 2 (CENTER) -->
+    <a href="{{ section.settings.link_2 }}" class="image-block center-block">
+      {% if section.settings.image_2 != blank %}
+        <img src="{{ section.settings.image_2 | image_url: width: 1200 }}" width="" height="" alt="{{ section.settings.title_2 }}">
+      {% else %}
+        {{ 'image' | placeholder_svg_tag }}
+      {% endif %}
+
+      <div class="center-overlay">
+        <h2 class="center-title">{{ section.settings.title_2 }}</h2>
+        <span class="shop-now">SHOP NOW</span>
+      </div>
+    </a>
+
+    <!-- IMAGE 3 -->
+    <a href="{{ section.settings.link_3 }}" class="image-block">
+      {% if section.settings.image_3 != blank %}
+        <img src="{{ section.settings.image_3 | image_url: width: 1200 }}" width="" height="" alt="{{ section.settings.title_3 }}">
+      {% else %}
+        {{ 'image' | placeholder_svg_tag }}
+      {% endif %}
+
+      <div class="image-overlay">
+        <h2 class="side-title right-title">
+          {{ section.settings.title_3 }}
+        </h2>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- MOBILE -->
+  <div class="mobile-swiper swiper premiumSwiper">
+    <div class="swiper-wrapper">
+      {% for i in (1..3) %}
+        {% assign link_key = 'link_' | append: i %}
+        {% assign image_key = 'image_' | append: i %}
+        {% assign title_key = 'title_' | append: i %}
+
+        <a href="{{ section.settings[link_key] }}" class="swiper-slide mobile-slide">
+          <img src="{{ section.settings[image_key] | image_url: width: 900 }}"  width="" height="" alt="{{ section.settings[title_key] }}">
+          <div class="mobile-text">
+            <h2>{{ section.settings[title_key] }}</h2>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+
+    <div class="swiper-pagination"></div>
+  </div>
+
+</section>
+
+
+<style>
+/* Global Section */
+.category-banner {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* -------------------------
+    SWIPER (Mobile only)
+--------------------------*/
+.mobile-swiper {
+  height: 420px;
+  display: block;
+}
+
+@media (min-width: 600px) {
+  .mobile-swiper {
+    display: none !important;
+  }
+}
+
+.mobile-slide {
+  position: relative;
+  height: 100%;
+}
+
+.mobile-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mobile-text {
+  position: absolute;
+  inset: 0;
+  bottom:-200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ✅ Responsive mobile title */
+.mobile-text h2 {
+  color: white;
+  font-weight: 400;
+  text-shadow: 0 10px 8px rgba(0,0,0,0.4);
+  /* clamp(min, vw scaling, max) */
+  font-size:2.7rem;
+}
+@media (max-width: 420px) {
+.mobile-text h2{
+font-size:1.7rem;
+font-weight:500;
+}
+}
+
+/* -------------------------
+   DESKTOP / TABLET GRID
+--------------------------*/
+.desktop-image {
+  display: none;
+}
+
+/* Tablet Breakpoint */
+@media (min-width: 600px) {
+  .desktop-image {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    min-height: 400px;
+  }
+}
+
+/* Image block layout */
+.image-block {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: hidden;
+}
+
+.image-block img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.5s;
+}
+
+.image-block:hover img {
+  filter: brightness(50%);
+}
+
+/* -------------------------
+   Side Titles (Rotated)
+--------------------------*/
+.side-title {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+  color: white;
+  white-space: nowrap;
+  font-weight: 400;
+  text-shadow: 0 10px 8px rgba(0,0,0,0.4);
+
+  /* ✅ Fully responsive font */
+  font-size: clamp(1.7rem, 3vw, 5rem);
+
+}
+
+/* Responsive left title spacing */
+.left-title {
+  left: clamp(-110px, -6vw, -60px);
+}
+
+/* Responsive right title spacing */
+.right-title {
+  right: clamp(-110px, -6vw, -60px);
+  transform: translateY(-50%) rotate(90deg);
+}
+
+/* -------------------------
+   CENTER BLOCK (Middle Image)
+--------------------------*/
+.center-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  padding-left:20px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ✅ Responsive center title */
+.center-title {
+  color: white;
+  font-weight: 400;
+  text-shadow: 0 10px 8px rgba(0,0,0,0.4);
+display:flex;
+justify-content:center;
+align-items:center;
+ 
+  font-size: clamp(1.7rem,3vw, 5rem);
+}
+
+/* SHOP NOW BUTTON */
+.shop-now {
+  margin-top: 10px;
+  color: white;
+  border: 1px solid white;
+  padding: 10px 30px;
+  border-radius: 50px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  transition: 0.3s;
+}
+
+.image-block:hover .shop-now {
+  background: white;
+  color: black;
+}
+
+/* Swiper Pagination */
+.swiper-pagination-bullet {
+  background: white !important;
+  opacity: 0.5 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: #facc15 !important;
+  opacity: 1 !important;
+}
+
+
+
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+  new Swiper(".premiumSwiper", {
+  loop: true,
+  slidesPerView: 1,
+  centeredSlides: false,
+  spaceBetween: 16,
+  autoplay: {
+    delay: 2000,
+    disableOnInteraction: false,
+  },
+  pagination: {
+    el: ".swiper-pagination",
+    clickable: true,
+  },
+  });
+  
+  });
+</script>
+
+
+{% schema %}
+  {
+    "name": "3 Category Banner",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image_1",
+        "label": "Image 1"
+      },
+      {
+        "type": "text",
+        "id": "title_1",
+        "label": "Title 1",
+        "default": "Category 1"
+      },
+      {
+        "type": "url",
+        "id": "link_1",
+        "label": "Link 1"
+      },
+
+      {
+        "type": "image_picker",
+        "id": "image_2",
+        "label": "Image 2"
+      }, {
+        "type": "text",
+        "id": "title_2",
+        "label": "Title 2",
+        "default": "Category 2"
+      }, {
+        "type": "url",
+        "id": "link_2",
+        "label": "Link 2"
+      }, {
+        "type": "image_picker",
+        "id": "image_3",
+        "label": "Image 3"
+      }, {
+        "type": "text",
+        "id": "title_3",
+        "label": "Title 3",
+        "default": "Category 3"
+      }, {
+        "type": "url",
+        "id": "link_3",
+        "label": "Link 3"
+      }
+    ],
+    "presets": [
+      {
+        "name": "3 Category Banner"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,409 @@
+<footer class="footer-slope fixed-footer relative bg-[#070B13] text-white mt-20 pt-16 pb-10">
+
+  <div class="max-w-7xl mx-auto grid grid-col-1 md:grid-cols-2 lg:grid-cols-4 gap-12 px-6">
+
+    <!-- COLUMN 1 — LOGO + ADDRESS -->
+    <div class="space-y-3 flex flex-col items-center md:items-start">
+  <div>
+
+    {% if section.settings.footer_logo != blank %}
+      <img src="{{ section.settings.footer_logo | image_url: width: 240 }}" width="160" height="70" alt="Logo" class="mb-3">
+    {% else %}
+      <img src="{{ 'logo (3).png' | asset_url }}" width="160" height="70" alt="Logo" class="mb-3">
+    {% endif %}
+
+    {% if section.settings.address != blank %}
+      <p class="text-sm leading-6 text-gray-300">{{ section.settings.address | newline_to_br }}</p>
+    {% endif %}
+
+    {% if section.settings.phone != blank %}
+      <p class="text-sm text-gray-300">{{ section.settings.phone | newline_to_br }}</p>
+    {% endif %}
+
+    <div class="flex gap-3 pt-2">
+      {% if section.settings.facebook_url != blank %}
+        <a href="{{ section.settings.facebook_url }}" class="border border-gray-100 rounded-full p-1 hover:border-yellow-500 hover:text-yellow-500 transition">{% render 'icon-facebook' %}</a>
+      {% endif %}
+      {% if section.settings.linkedin_url != blank %}
+        <a href="{{ section.settings.linkedin_url }}" class="border border-gray-100 rounded-full p-1 hover:border-yellow-500 hover:text-yellow-500 transition">{% render 'icon-linkdin' %}</a>
+      {% endif %}
+      {% if section.settings.twitter_url != blank %}
+        <a href="{{ section.settings.twitter_url }}" class="border border-gray-100 rounded-full p-1 hover:border-yellow-500 hover:text-yellow-500 transition">{% render 'icon-twitter' %}</a>
+      {% endif %}
+      {% if section.settings.youtube_url != blank %}
+        <a href="{{ section.settings.youtube_url }}" class="border border-gray-100 rounded-full p-1 hover:border-yellow-500 hover:text-yellow-500 transition">{% render 'icon-youtube' %}</a>
+      {% endif %}
+    </div>
+
+  </div>
+</div>
+
+
+    <!-- COLUMN 2 — SUPPORT -->
+    <div class="space-y-3 flex flex-col items-center md:items-start">
+  <h3 class="font-semibold mb-4">{{ section.settings.support_title }}</h3>
+
+  <ul class="space-y-2 text-sm text-gray-300 flex flex-col items-center md:items-start">
+    {% if section.settings.support_1_text != blank %}
+      <li><a href="{{ section.settings.support_1_url }}" class="hover:text-yellow-500">{{ section.settings.support_1_text }}</a></li>
+    {% endif %}
+    {% if section.settings.support_2_text != blank %}
+      <li><a href="{{ section.settings.support_2_url }}" class="hover:text-yellow-500">{{ section.settings.support_2_text }}</a></li>
+    {% endif %}
+    {% if section.settings.support_3_text != blank %}
+      <li><a href="{{ section.settings.support_3_url }}" class="hover:text-yellow-500">{{ section.settings.support_3_text }}</a></li>
+    {% endif %}
+    {% if section.settings.support_4_text != blank %}
+      <li><a href="{{ section.settings.support_4_url }}" class="hover:text-yellow-500">{{ section.settings.support_4_text }}</a></li>
+    {% endif %}
+    {% if section.settings.support_5_text != blank %}
+      <li><a href="{{ section.settings.support_5_url }}" class="hover:text-yellow-500">{{ section.settings.support_5_text }}</a></li>
+    {% endif %}
+  </ul>
+</div>
+
+
+
+    <!-- COLUMN 3 — PRODUCTS -->
+    <div class="space-y-3 flex flex-col items-center md:items-start">
+  <h3 class="font-semibold mb-4">{{ section.settings.products_title }}</h3>
+
+  <ul class="space-y-2 text-sm text-gray-300 flex flex-col items-center md:items-start">
+
+    {% if section.settings.product_1_text != blank %}
+      <li><a href="{{ section.settings.product_1_url }}" class="hover:text-yellow-500">{{ section.settings.product_1_text }}</a></li>
+    {% endif %}
+
+    {% if section.settings.product_2_text != blank %}
+      <li><a href="{{ section.settings.product_2_url }}" class="hover:text-yellow-500">{{ section.settings.product_2_text }}</a></li>
+    {% endif %}
+
+    {% if section.settings.product_3_text != blank %}
+      <li><a href="{{ section.settings.product_3_url }}" class="hover:text-yellow-500">{{ section.settings.product_3_text }}</a></li>
+    {% endif %}
+
+    {% if section.settings.product_4_text != blank %}
+      <li><a href="{{ section.settings.product_4_url }}" class="hover:text-yellow-500">{{ section.settings.product_4_text }}</a></li>
+    {% endif %}
+
+    {% if section.settings.product_5_text != blank %}
+      <li><a href="{{ section.settings.product_5_url }}" class="hover:text-yellow-500">{{ section.settings.product_5_text }}</a></li>
+    {% endif %}
+
+  </ul>
+</div>
+
+
+    <!-- COLUMN 4 — NEWSLETTER -->
+    <div class="space-y-3 flex flex-col items-center md:items-start">
+  <h3 class="font-semibold mb-4">{{ section.settings.newsletter_title }}</h3>
+
+  {% if section.settings.newsletter_text != blank %}
+    <p class="text-sm leading-6 text-gray-300 mb-4">{{ section.settings.newsletter_text }}</p>
+  {% endif %}
+
+ {% form 'customer', id: 'footer-newsletter' %}
+
+  <div class="flex flex-col gap-2 md:flex-row">
+    <input type="text"
+      name="contact[name]"
+      placeholder="Name"
+      class="w-full px-3 py-2 rounded bg-white text-black text-sm outline-none">
+
+    <input type="email"
+      name="contact[email]"
+      placeholder="Email"
+      required
+      class="w-full px-3 py-2 rounded bg-white text-black text-sm outline-none">
+  </div>
+
+  <button type="submit"
+    class="w-full bg-yellow-500 hover:bg-yellow-600 transition text-black font-semibold py-2 rounded mt-3">
+    {{ section.settings.newsletter_button }}
+  </button>
+
+  {% if form.posted_successfully? %}
+    <p class="news-succ">Thanks for subscribing!</p>
+  {% endif %}
+
+  {% if form.errors %}
+    <p class="news-error">Please enter a valid email.</p>
+  {% endif %}
+
+{% endform %}
+
+
+</div>
+
+
+  </div>
+
+ 
+  <!-- BOTTOM BAR -->
+<div class="border-t border-gray-600 mt-10 pt-6">
+  <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between text-xs text-white gap-4">
+
+    <p class="text-md hover:text-yellow-500">{{ section.settings.copyright }}</p>
+
+    <div class="flex gap-6">
+      <a href="#" class="hover:text-yellow-500">privacy policy</a>
+      <a href="#" class="hover:text-yellow-500">privacy policy</a>
+      <a href="#" class="hover:text-yellow-500">privacy policy</a>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+</footer>
+
+<style>
+  body {
+  .fixed-footer {
+  width: 100%;
+  position: relative;
+}
+
+.footer-slope::before {
+  content: "";
+  position: absolute;
+  top: -35px;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: #070B13; /* same page bg so no white gap */
+  transform: skewY(-1.1deg);
+}
+.news-succ{
+  margin-top: 10px;
+  color: #00d26a;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 6px;
+  display: inline-block;
+}
+.news-error {
+margin-top: 10px;
+  color: #ff3b3b;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+</style>
+
+{% schema %}
+
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "footer_logo",
+      "label": "Footer logo"
+    },
+
+    {
+      "type": "textarea",
+      "id": "address",
+      "label": "Company address",
+      "default": "Intelligent Automation Limited\nFirst Floor, 4 Longwalk Road\nStockley Park, Uxbridge\nUB11 1FE"
+    },
+    {
+      "type": "textarea",
+      "id": "phone",
+      "label": "Phone / Contact info",
+      "default": "Tel: +44 (0)20 8432 7749\nFax: +44 (0)20 8432 2751"
+    },
+
+    {
+      "type": "url",
+      "id": "facebook_url",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "url",
+      "id": "linkedin_url",
+      "label": "LinkedIn URL"
+    },
+    {
+      "type": "url",
+      "id": "twitter_url",
+      "label": "Twitter (X) URL"
+    },
+    {
+      "type": "url",
+      "id": "youtube_url",
+      "label": "YouTube URL"
+    },
+
+    {
+      "type": "header",
+      "content": "Support Links"
+    },
+    {
+      "type": "text",
+      "id": "support_title",
+      "label": "Support title",
+      "default": "SUPPORT"
+    },
+    {
+      "type": "text",
+      "id": "support_1_text",
+      "label": "Support link 1 name",
+      "default": "Home"
+    },
+    {
+      "type": "url",
+      "id": "support_1_url",
+      "label": "Support link 1 URL"
+    },
+    {
+      "type": "text",
+      "id": "support_2_text",
+      "label": "Support link 2 name",
+      "default": "Solutions"
+    },
+    {
+      "type": "url",
+      "id": "support_2_url",
+      "label": "Support link 2 URL"
+    },
+    {
+      "type": "text",
+      "id": "support_3_text",
+      "label": "Support link 3 name",
+      "default": "About us"
+    },
+    {
+      "type": "url",
+      "id": "support_3_url",
+      "label": "Support link 3 URL"
+    },
+    {
+      "type": "text",
+      "id": "support_4_text",
+      "label": "Support link 4 name",
+      "default": "News"
+    },
+    {
+      "type": "url",
+      "id": "support_4_url",
+      "label": "Support link 4 URL"
+    },
+    {
+      "type": "text",
+      "id": "support_5_text",
+      "label": "Support link 5 name",
+      "default": "Contact us"
+    },
+    {
+      "type": "url",
+      "id": "support_5_url",
+      "label": "Support link 5 URL"
+    },
+
+    {
+      "type": "header",
+      "content": "Product Links"
+    },
+    {
+      "type": "text",
+      "id": "products_title",
+      "label": "Products title",
+      "default": "PRODUCTS"
+    },
+    {
+      "type": "text",
+      "id": "product_1_text",
+      "label": "Product link 1 name",
+      "default": "Plcs"
+    },
+    {
+      "type": "url",
+      "id": "product_1_url",
+      "label": "Product link 1 URL"
+    },
+    {
+      "type": "text",
+      "id": "product_2_text",
+      "label": "Product link 2 name",
+      "default": "Hmis"
+    },
+    {
+      "type": "url",
+      "id": "product_2_url",
+      "label": "Product link 2 URL"
+    },
+    {
+      "type": "text",
+      "id": "product_3_text",
+      "label": "Product link 3 name",
+      "default": "Motion controllers"
+    },
+    {
+      "type": "url",
+      "id": "product_3_url",
+      "label": "Product link 3 URL"
+    },
+    {
+      "type": "text",
+      "id": "product_4_text",
+      "label": "Product link 4 name",
+      "default": "Brushless servo systems"
+    },
+    {
+      "type": "url",
+      "id": "product_4_url",
+      "label": "Product link 4 URL"
+    },
+    {
+      "type": "text",
+      "id": "product_5_text",
+      "label": "Product link 5 name",
+      "default": "Gearboxes"
+    },
+    {
+      "type": "url",
+      "id": "product_5_url",
+      "label": "Product link 5 URL"
+    },
+
+    {
+      "type": "header",
+      "content": "Newsletter Section"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_title",
+      "label": "Newsletter title",
+      "default": "NEWSLETTER"
+    },
+    {
+      "type": "textarea",
+      "id": "newsletter_text",
+      "label": "Newsletter description",
+      "default": "Penatibus consectetur nec nostra sodales rutrum."
+    },
+    {
+      "type": "text",
+      "id": "newsletter_button",
+      "label": "Button text",
+      "default": "SIGN UP NEWSLETTER"
+    },
+    {
+    "type": "text",
+    "id": "copyright",
+    "label": "copyright text",
+    "default":"Copyright © 2023 Intelligent Automation. All rights reserved."
+    }
+  ]
+}
+
+
+{%  endschema %}

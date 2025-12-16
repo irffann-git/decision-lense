@@ -1,0 +1,171 @@
+<section class="min-h-screen bg-white py-12 px-4">
+  <div class="max-w-5xl mx-auto space-y-10">
+
+    <!-- Title + Back -->
+    <div class="flex items-center justify-between">
+      <h1 class="text-4xl font-extrabold text-gray-900">My Addresses</h1>
+      <a href="/account" class="text-yellow-600 hover:text-black font-semibold transition">← Back to Account</a>
+    </div>
+
+    <!-- Existing Addresses -->
+    {% if customer.addresses_count > 0 %}
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        {% for address in customer.addresses %}
+          <div class="border-2 border-yellow-600 p-6 rounded-xl shadow-xl bg-white space-y-3">
+
+            {% if address == customer.default_address %}
+              <span class="px-3 py-1 text-xs bg-yellow-600 text-black rounded-md font-semibold">Default</span>
+            {% endif %}
+
+            <p class="font-semibold text-lg">{{ address.first_name }} {{ address.last_name }}</p>
+            <p class="text-gray-700">{{ address.address1 }}</p>
+
+            {% if address.address2 != blank %}
+              <p class="text-gray-700">{{ address.address2 }}</p>
+            {% endif %}
+
+            <p class="text-gray-700">{{ address.city }}, {{ address.province }} - {{ address.zip }}</p>
+            <p class="text-gray-700">{{ address.country }}</p>
+            <p class="text-gray-700">{{ address.phone }}</p>
+
+            <div class="flex items-center gap-3 pt-3">
+              <button onclick="document.getElementById('edit_{{ address.id }}').classList.toggle('hidden')" class="text-yellow-600 hover:underline font-medium">Edit</button>
+
+              <form method="post" action="{{ routes.account_addresses_url }}/{{ address.id }}">
+                <input
+                  type="hidden"
+                  name="_method"
+                  value="delete">
+                <button class="text-red-600 hover:underline font-medium">Delete</button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Edit Address Form -->
+          <div id="edit_{{ address.id }}" class="hidden border mt-2 p-6 rounded-lg bg-gray-50 space-y-4">
+
+            <h3 class="font-semibold text-xl mb-3">Edit Address</h3>
+
+            {% form 'customer_address'
+              , address %}
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                <input
+                  class="border p-3 rounded"
+                  placeholder="First Name"
+                  name="address[first_name]"
+                  value="{{ form.first_name }}">
+                <input
+                  class="border p-3 rounded"
+                  placeholder="Last Name"
+                  name="address[last_name]"
+                  value="{{ form.last_name }}">
+                <input
+                  class="border p-3 rounded"
+                  placeholder="Address Line 1"
+                  name="address[address1]"
+                  value="{{ form.address1 }}">
+                <input
+                  class="border p-3 rounded"
+                  placeholder="Address Line 2"
+                  name="address[address2]"
+                  value="{{ form.address2 }}">
+                <input
+                  class="border p-3 rounded"
+                  placeholder="City"
+                  name="address[city]"
+                  value="{{ form.city }}">
+                <input
+                  class="border p-3 rounded"
+                  placeholder="ZIP / Postal"
+                  name="address[zip]"
+                  value="{{ form.zip }}">
+                <input
+                  class="border p-3 rounded"
+                  placeholder="Phone"
+                  name="address[phone]"
+                  value="{{ form.phone }}">
+
+                <select name="address[country]" class="border p-3 rounded col-span-2">
+                  {{ country_option_tags }}
+                </select>
+              </div>
+
+              <label class="flex items-center gap-2 mt-4">
+                <input
+                  type="checkbox"
+                  name="address[default]"
+                  {% if address == customer.default_address %}
+                  checked{% endif %}>
+                <span>Set as default address</span>
+              </label>
+
+              <button type="submit" class="w-full mt-4 py-3 bg-yellow-600 text-black font-semibold rounded-md hover:bg-black hover:text-yellow-600 transition">
+                Save Changes
+              </button>
+            {% endform %}
+          </div>
+        {% endfor %}
+      </div>
+
+    {% else %}
+      <p class="text-gray-600">You have no saved addresses.</p>
+    {% endif %}
+
+    <!-- Add New Address -->
+    <div class="border-2 border-yellow-600 p-6 rounded-xl shadow-xl bg-white space-y-4 max-w-xl mx-auto mt-10">
+
+      <h3 class="text-2xl font-bold text-gray-900">Add New Address</h3>
+
+      {% form 'customer_address'
+        , customer.new_address %}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+          <input
+            class="border p-3 rounded"
+            placeholder="First Name"
+            name="address[first_name]">
+          <input
+            class="border p-3 rounded"
+            placeholder="Last Name"
+            name="address[last_name]">
+          <input
+            class="border p-3 rounded"
+            placeholder="Address Line 1"
+            name="address[address1]">
+          <input
+            class="border p-3 rounded"
+            placeholder="Address Line 2"
+            name="address[address2]">
+          <input
+            class="border p-3 rounded"
+            placeholder="City"
+            name="address[city]">
+          <input
+            class="border p-3 rounded"
+            placeholder="ZIP / Postal"
+            name="address[zip]">
+          <input
+            class="border p-3 rounded"
+            placeholder="Phone"
+            name="address[phone]">
+
+          <select name="address[country]" class="border p-3 rounded col-span-2">
+            {{ country_option_tags }}
+          </select>
+        </div>
+
+        <label class="flex items-center gap-2 mt-4">
+          <input type="checkbox" name="address[default]">
+          <span>Set as default address</span>
+        </label>
+
+        <button type="submit" class="w-full mt-6 py-3 bg-yellow-600 text-black font-semibold rounded-md hover:bg-black hover:text-yellow-600 transition">
+          Add Address
+        </button>
+      {% endform %}
+    </div>
+
+  </div>
+</section>

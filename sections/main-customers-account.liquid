@@ -1,0 +1,323 @@
+<section class="min-h-screen bg-white py-12 px-4">
+  <div class="max-w-6xl mx-auto space-y-12">
+
+    <!-- Title -->
+    <h1 class="account-title mb-12">
+      {{ section.settings.welcome_title }} {{ customer.first_name }}
+    </h1>
+
+    <!-- Profile + Address -->
+    <div class="account-grid mb-6">
+
+      <!-- Address -->
+      <div class="box-card">
+        <h2 class="box-title">{{ section.settings.address_title }}</h2>
+
+        {% if customer.default_address %}
+          <p>
+            <strong>Address:</strong>
+            {{ customer.default_address.address1 }}</p>
+          {% if customer.default_address.address2 != blank %}
+            <p>
+              <strong>Address 2:</strong>
+              {{ customer.default_address.address2 }}</p>
+          {% endif %}
+          <p>
+            <strong>City:</strong>
+            {{ customer.default_address.city }}</p>
+          <p>
+            <strong>Zip:</strong>
+            {{ customer.default_address.zip }}</p>
+        {% else %}
+          <p class="empty-msg">No address available</p>
+        {% endif %}
+
+        <a href="{{ routes.account_addresses_url }}" class="yellow-btn">
+          {{ section.settings.address_button }}
+        </a>
+      </div>
+
+      <!-- Account Info -->
+      <div class="box-card">
+        <h2 class="box-title">{{ section.settings.accountinfo_title }}</h2>
+
+        <p>
+          <strong>Name:</strong>
+          {{ customer.first_name }} {{ customer.last_name }}</p>
+        <p>
+          <strong>Email:</strong>
+          {{ customer.email }}</p>
+        <p>
+          <strong>Phone:</strong>
+          {{ customer.phone | default: "-" }}</p>
+        <p>
+          <strong>Orders Count:</strong>
+          {{ customer.orders_count }}</p>
+      </div>
+
+    </div>
+
+    <!-- Orders -->
+    <div class="orders-wrapper mb-6">
+      <h2 class="orders-title">{{ section.settings.orders_title }}</h2>
+
+      {% paginate customer.orders by 10 %}
+
+        {% if customer.orders.size == 0 %}
+          <p class="orders-empty">You have no orders yet.</p>
+        {% endif %}
+
+        <div class="orders-list">
+          {% for order in customer.orders %}
+            <div class="order-card">
+              <div class="order-card-head">
+                <span class="order-number">Order {{ order.name }}</span>
+                <span class="order-date">{{ order.created_at | date: "%B %d, %Y" }}</span>
+              </div>
+
+              <p class="order-status">Status: {{ order.financial_status }}</p>
+              <p class="order-total">Total — {{ order.total_price | money }}</p>
+
+              <ul class="order-items">
+                {% for item in order.line_items %}
+                  <li>{{ item.title }} × {{ item.quantity }} — {{ item.price | money }}</li>
+                {% endfor %}
+              </ul>
+
+              <a href="{{ order.order_status_url }}" class="order-view-btn">
+                {{ section.settings.view_order_button }}
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="orders-pagination">
+          {{ paginate | default_pagination }}
+        </div>
+
+      {% endpaginate %}
+    </div>
+
+    <!-- Logout -->
+    <div class="logout-wrap">
+      <a href="{{ routes.account_logout_url }}" class="logout-btn">
+        {{ section.settings.logout_button }}
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .account-title {
+    font-size: 42px;
+    font-weight: 900;
+    text-align: center;
+    background: linear-gradient(to right, {{ section.settings.theme_color }}, #000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .account-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+    gap: 22px;
+  }
+
+  .box-card {
+    background: #fff;
+    border: 2px solid{{ section.settings.theme_color }};
+    border-radius: 14px;
+    padding: 26px;
+    box-shadow: 0 0 18px rgba(255, 208, 0, 0.15);
+  }
+
+  .box-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+
+  .empty-msg {
+    color: #777;
+    font-style: italic;
+  }
+
+  .yellow-btn {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 10px 18px;
+    background: {{ section.settings.theme_color }};
+    color: #000;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .yellow-btn:hover {
+    background: #000;
+    color: {{ section.settings.theme_color }};
+  }
+
+  /* Orders */
+  .orders-wrapper {
+    background: #fff;
+    border: 2px solid{{ section.settings.theme_color }};
+    border-radius: 14px;
+    padding: 32px;
+    box-shadow: 0 0 18px rgba(255, 208, 0, 0.20);
+  }
+
+  .orders-title {
+    font-size: 32px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .orders-empty {
+    text-align: center;
+    color: #777;
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+
+  .orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .order-card {
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+    padding: 20px;
+    background: #fff;
+    transition: 0.25s;
+  }
+  .order-card:hover {
+    border-color: #000;
+    transform: translateY(-2px);
+    background: #fffef5;
+  }
+
+  .order-card-head {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+
+  .order-number {
+    font-weight: 700;
+  }
+  .order-date {
+    font-size: 14px;
+    color: #777;
+  }
+  .order-status {
+    color: #666;
+    margin-bottom: 2px;
+  }
+  .order-total {
+    color: green;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  /* Product list */
+  .order-items {
+    margin: 0 0 12px;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* View order button */
+  .order-view-btn {
+    display: inline-block;
+    padding: 9px 16px;
+    background: {{ section.settings.theme_color }};
+    color: #000;
+    font-weight: 600;
+    border-radius: 6px;
+    text-decoration: none;
+  }
+  .order-view-btn:hover {
+    background: #000;
+    color: {{ section.settings.theme_color }};
+  }
+
+  /* Logout */
+  .logout-wrap {
+    text-align: center;
+  }
+  .logout-btn {
+    display: inline-block;
+    padding: 12px 26px;
+    background: red;
+    color: #fff;
+    border-radius: 6px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .logout-btn:hover {
+    background: #000;
+    color: #ff4747;
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "Account Page",
+    "settings": [
+      {
+        "type": "color",
+        "id": "theme_color",
+        "label": "theme color",
+        "default": "#C77632"
+
+      },
+      {
+        "type": "text",
+        "id": "welcome_title",
+        "label": "Welcome title",
+        "default": "Welcome,"
+      },
+      {
+        "type": "text",
+        "id": "address_title",
+        "label": "Address title",
+        "default": "Shipping Address"
+      },
+      {
+        "type": "text",
+        "id": "address_button",
+        "label": "Address button text",
+        "default": "Edit Address"
+      }, {
+        "type": "text",
+        "id": "accountinfo_title",
+        "label": "Account info title",
+        "default": "Account Information"
+      }, {
+        "type": "text",
+        "id": "orders_title",
+        "label": "Orders section title",
+        "default": "My Orders"
+      }, {
+        "type": "text",
+        "id": "view_order_button",
+        "label": "View order button",
+        "default": "View Order"
+      }, {
+        "type": "text",
+        "id": "logout_button",
+        "label": "Logout button text",
+        "default": "Log Out"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Account Page"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,417 @@
+<!-- ============ TOP STYLES (MUST BE AT THE TOP) ============ -->
+<link rel="stylesheet" href="https://cdn.shopify.com/shopifycloud/model-viewer-ui/assets/v1.0/model-viewer-ui.css">
+<link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
+
+<style>
+  /* Swiper controls */
+  .swiper-button-prev,
+  .swiper-button-next {
+    color: black;
+    height: 20px;
+  }
+  .swiper-button-prev::after,
+  .swiper-button-next::after {
+    font-size: 20px;
+  }
+  .swiper-pagination-bullet {
+    background: #bbb;
+    opacity: 0.4;
+  }
+  .swiper-pagination-bullet-active {
+    background: black !important;
+    opacity: 1;
+  }
+
+  /* ===== PRODUCT PAGE LAYOUT ===== */
+
+  .product-page-wrapper {
+    max-width: 1150px;
+    margin: 32px auto;
+    padding: 0 16px;
+  }
+
+  .product-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .product-media-column,
+  .product-info-column {
+    width: 100%;
+  }
+
+  /* Desktop columns */
+  @media (min-width: 768px) {
+    .product-layout {
+      flex-wrap: nowrap;
+      align-items: flex-start;
+    }
+    .product-media-column {
+      width: 50%;
+    }
+    .product-info-column {
+      width: 50%;
+    }
+  }
+
+  /* Desktop sticky info */
+  @media (min-width: 768px) {
+    .product-info-sticky {
+      position: sticky;
+      top: 20px;
+    }
+  }
+
+  /* Desktop gallery */
+  .product-gallery-desktop {
+    display: none;
+  }
+  @media (min-width: 768px) {
+    .product-gallery-desktop {
+      display: block;
+    }
+  }
+
+  /* Mobile gallery (Swiper) */
+  .product-gallery-mobile {
+    display: block;
+  }
+  @media (min-width: 768px) {
+    .product-gallery-mobile {
+      display: none;
+    }
+  }
+
+  .product-gallery-item {
+    width: 100%;
+    border: 3px solid #6b7280;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+
+  /* Swiper spacing left/right on mobile */
+  .product-swiper {
+    padding: 0 16px 24px;
+  }
+
+  .product-swiper-slide-inner {
+    height: 100%;
+    border: 3px solid #6b7280;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 0 14px;
+  }
+
+  /* ===== PRODUCT INFO STYLES ===== */
+
+  .product-info-wrapper {
+    padding: 8px;
+  }
+
+  .product-meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 8px 0;
+  }
+
+  .product-vendor {
+    font-size: 11px;
+    color: #6b7280;
+  }
+
+  .product-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #111827;
+    margin: 12px 0;
+  }
+
+  .product-price-row {
+    margin: 12px 0;
+  }
+
+  .product-price-compare {
+    font-size: 14px;
+    color: #6b7280;
+    text-decoration: line-through;
+    margin-right: 8px;
+  }
+
+  .product-price {
+    font-size: 18px;
+    color: #111827;
+    font-weight: 600;
+  }
+
+  .product-label {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 4px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .product-select,
+  .product-quantity-input {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+
+  .product-select:focus,
+  .product-quantity-input:focus {
+    outline: none;
+    border-color: #111827;
+    box-shadow: 0 0 0 2px rgba(17, 24, 39, 0.2);
+  }
+
+  .product-description {
+    color: #374151;
+    margin: 12px 0;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 4px;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: 0.2s;
+  }
+
+  .btn-primary {
+    background-color: #111827;
+    color: #ffffff;
+  }
+  .btn-primary:hover {
+    background-color: #374151;
+  }
+
+  .btn-secondary {
+    background-color: #111827;
+    color: #ffffff;
+  }
+  .btn-secondary:hover {
+    background-color: #374151;
+  }
+
+  /* Wishlist active state */
+  .add-to-wishlist-btn.active {
+    background-color: #111827;
+    color: #ffffff;
+  }
+
+  .product--information {
+    height: fit-content;
+  }
+</style>
+
+<!-- ============ PRODUCT PAGE UI ============ -->
+<div x-data="{ productModalOpen: false }" class="product-page-wrapper">
+
+  <div class="product-layout">
+
+    <!-- Product Image Gallery -->
+    <div class="product-media-column">
+
+      <!-- Desktop Gallery -->
+      <div class="product-gallery-desktop">
+        {% for media in product.media %}
+          <div class="product-gallery-item">
+            {% render 'product-media', media: media %}
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- Mobile Swiper -->
+      <div class="product-gallery-mobile">
+        <div class="swiper product-swiper">
+          <div class="swiper-wrapper">
+            {% for media in product.media %}
+              <div class="swiper-slide">
+                <div class="product-swiper-slide-inner">
+                  {% render 'product-media', media: media %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          <div class="swiper-pagination"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Product Information -->
+    <div class="product-info-column">
+      <div class="product-info-wrapper product-info-sticky product--information">
+        {% form 'product', product, id: 'product-form', novalidate: 'novalidate' %}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+          <!-- Vendor + Wishlist -->
+          <div class="product-meta-row">
+            <span class="product-vendor">{{ product.vendor }}</span>
+          </div>
+
+          <h1 class="product-title">{{ product.title }}</h1>
+
+          <div class="product-price-row" id="price-{{ section.id }}">
+            {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}
+              <span class="product-price-compare">
+                {{ product.selected_or_first_available_variant.compare_at_price | money }}
+              </span>
+            {% endif %}
+            <span class="product-price">
+              {{ product.selected_or_first_available_variant.price | money }}
+            </span>
+          </div>
+
+          <!-- Variant Selector -->
+          {% unless product.has_only_default_variant %}
+            <variant-selector data-url="{{ product.url }}" data-section="{{ section.id }}">
+              {% for option in product.options_with_values %}
+                <label class="product-label">{{ option.name }}</label>
+                <select name="options[{{ option.name }}]" class="product-select">
+                  {% for value in option.values %}
+                    <option value="{{ value }}" {% if option.selected_value == value %}selected{% endif %}>
+                      {{ value }}
+                    </option>
+                  {% endfor %}
+                </select>
+              {% endfor %}
+              <script type="application/json">{{ product.variants | json }}</script>
+            </variant-selector>
+          {% endunless %}
+
+          <!-- Quantity -->
+          <label class="product-label">Quantity</label>
+          <input
+            type="number"
+            name="quantity"
+            min="1"
+            value="1"
+            class="product-quantity-input">
+
+          <!-- Description -->
+          <p class="product-description">
+            {{ product.description }}
+          </p>
+
+          <!-- Add to Cart -->
+          <button
+            type="submit"
+            name="add"
+            class="btn-primary">
+            {% if product.selected_or_first_available_variant.available %}
+              Add to cart
+            {% else %}
+              Sold out
+            {% endif %}
+          </button>
+
+          <!-- WISHLIST BUTTON (BLOCK) -->
+          {% for block in section.blocks %}
+            {% case block.type %}
+              {% when 'wishlist_button' %}
+                <button
+                  type="button"
+                  class="btn-secondary add-to-wishlist-btn"
+                  data-handle="{{ product.handle }}"
+                  {{ block.shopify_attributes }}>
+                  Add to Wishlist
+                </button>
+            {% endcase %}
+          {% endfor %}
+
+        {% endform %}
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ============ WISHLIST SCRIPT ============ -->
+<script>
+  // Wishlist toggle
+  console.log("wishlist loaded");
+
+  document.addEventListener("click", function (e) {
+    let btn = e.target.closest(".add-to-wishlist-btn");
+    if (!btn) return;
+
+    let handle = btn.dataset.handle;
+    let wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
+
+    if (wishlist.includes(handle)) {
+      wishlist = wishlist.filter(h => h !== handle);
+      btn.classList.remove("active");
+      btn.textContent = "Add to Wishlist";
+    } else {
+      if (!wishlist.includes(handle)) wishlist.push(handle);
+      btn.classList.add("active");
+      btn.textContent = "Added to Wishlist ❤️";
+    }
+
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+  });
+
+  // Keep active on reload
+  document.addEventListener("DOMContentLoaded", () => {
+    let wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
+    document.querySelectorAll(".add-to-wishlist-btn").forEach(btn => {
+      if (wishlist.includes(btn.dataset.handle)) {
+        btn.classList.add("active");
+        btn.textContent = "Added to Wishlist ❤️";
+      }
+    });
+  });
+</script>
+
+<!-- ============ SWIPER + MODEL VIEWER JS (BOTTOM ALWAYS) ============ -->
+<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js" defer></script>
+<script src="{{ 'product-model.js' | asset_url }}" defer></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    new Swiper('.product-swiper', {
+      loop: true,
+      slidesPerView: 1,
+      centeredSlides: false,
+      spaceBetween: 20,
+      autoplay: { delay: 2500, disableOnInteraction: false },
+      pagination: { el: '.swiper-pagination', clickable: true },
+      navigation: { prevEl: '.swiper-button-prev', nextEl: '.swiper-button-next' },
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Product",
+  "blocks": [
+    { "type": "vendor", "name": "Vendor" },
+    { "type": "title", "name": "Title" },
+    { "type": "price", "name": "Price" },
+    { "type": "variant_selector", "name": "Variant Selector" },
+    { "type": "quantity", "name": "Quantity" },
+    { "type": "description", "name": "Description" },
+    { "type": "checkout_buttons", "name": "Checkout Buttons" },
+    { "type": "wishlist_button" , "name": "Wishlist button" }
+  ],
+  "presets": [{ "name": "Product" }]
+}
+{% endschema %}

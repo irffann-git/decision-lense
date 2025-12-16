@@ -1,0 +1,166 @@
+<section class="w-full py-12 mb-8 bg-white">
+  <div class="max-w-7xl mx-auto px-4">
+
+    <!-- Section Heading -->
+    {% if section.settings.heading != blank %}
+      <h2 class="text-center text-xl md:text-2xl font-bold mb-10">
+        {{ section.settings.heading }}
+      </h2>
+    {% endif %}
+
+    <!-- Desktop Grid -->
+    <div class="hidden py-4 bg-red-600 md:grid grid-cols-5 gap-6">
+      {% for block in section.blocks %}
+       
+        <a href="{{ block.settings.link }}" class="flex flex-col gap-3 group cursor-pointer">
+ <div class="py-20 px-4" style="background-color: {{ block.settings.bg_color }};">
+          {% if block.settings.image != blank %}
+            <img
+              src="{{ block.settings.image | image_url: width: 500 }}"
+              width="500"
+              height="500"
+              alt="{{ block.settings.title }}"
+              class="w-full h-full object-contain rounded
+                 transition duration-300 group-hover:scale-115 overflow-hidden">
+          {% else %}
+            {{ 'collection-3' | placeholder_svg_tag: "w-full h-[160px] object-contain bg-[#F6F6F6] rounded" }}
+          {% endif %}
+</div>
+          <span class="text-sm py-3 text-gray-700 font-medium text-start group-hover:text-black">
+            {{ block.settings.title }}
+          </span>
+
+        </a>
+        
+      {% endfor %}  
+    </div>
+
+
+    <!-- Mobile Swiper -->
+    <div class="shape-mobile-swiper swiper shapeSwiper mt-4">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide px-8">
+
+            <a href="{{ block.settings.link }}" class="flex flex-col group items-center gap-3">
+               <div class="py-20 px-4" style="background-color: {{ block.settings.bg_color }};">
+
+              {% if block.settings.image != blank %}
+                <img
+                  src="{{ block.settings.image | image_url: width: 500 }}"
+                  alt="{{ block.settings.title }}"
+                  height="500"
+                  width="500"
+                  class="w-full h-full object-contain rounded
+                 transition duration-300 group-hover:scale-115 overflow-hidden">
+              {% else %}
+                {{ 'collection-1' | placeholder_svg_tag: "w-full h-[160px] object-contain bg-[#F6F6F6] rounded" }}
+              {% endif %}
+              </div>
+
+              <span class="text-sm text-gray-700 font-medium text-start py-3 hover:text-black">
+                {{ block.settings.title }}
+              </span>
+
+            </a>
+
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+
+  </div>
+</section>
+<style>
+  /* show on small & medium screens */
+  .shape-mobile-swiper {
+    display: block;
+  }
+
+  /* hide on large + screens */
+  @media (min-width: 768px) {
+    .shape-mobile-swiper {
+      display: none !important;
+    }
+  }
+
+</style>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+  new Swiper(".shapeSwiper", {
+    slidesPerView: 1,
+    centeredSlides: true,
+    spaceBetween: 20,
+    loop: true,
+    autoplay: { delay: 2000 },
+  });
+  });
+</script>
+
+
+{% schema %}
+  {
+    "name": "glass shape collection",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Wear the Shape Trends"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "shape_block",
+        "name": "Shape item",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Upload Image"
+          },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "baground color",
+        "default":"#F5F5F5"
+      }, {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "shape name"
+          }, {
+            "type": "url",
+            "id": "link",
+            "label": "enter link"
+          }
+        ]
+      }
+    ],
+    "max_blocks": 10,
+    "presets": [
+      {
+        "name": "Wear the Shape Trends",
+        "blocks": [
+          {
+            "type": "shape_block"
+          },
+          {
+            "type": "shape_block"
+          },
+          {
+            "type": "shape_block"
+          },
+          {
+            "type": "shape_block"
+          }, {
+            "type": "shape_block"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

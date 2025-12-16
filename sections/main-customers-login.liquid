@@ -1,0 +1,243 @@
+<section class="login-wrapper" x-data="{ loginForm: true, pwRecoverForm: false }">
+
+  {% form 'customer_login' %}
+  {% endform %}
+
+  <!-- LOGIN FORM -->
+  <div x-show="loginForm" x-transition class="login-card">
+    <div class="login-header">
+      {% if section.settings.logo != blank %}
+      <img src="{{ section.settings.logo | image_url: width: 300 }}" width="" height="" class="login-logo">
+      {% else %}
+      <img src="{{ 'logo (3).png' | asset_url }}" width="" height="" class="login-logo">
+      {% endif %}
+    </div>
+
+    <div class="login-body">
+
+      <h2 class="login-title">Welcome Back</h2>
+      <p class="login-subtitle">Login to continue to your account</p>
+
+      {% form 'customer_login' %}
+      {{ form.errors | default_errors }}
+
+      <input type="email" name="customer[email]" placeholder="Email address" required class="login-input">
+      <input type="password" name="customer[password]" placeholder="Password" required class="login-input">
+
+      <button type="submit" class="login-btn">Login</button>
+
+      <p class="login-text">
+        <a href="#" x-on:click="loginForm = false; pwRecoverForm = true">Forgot your password?</a>
+      </p>
+
+      <p class="login-text">
+        Don't have an account?
+        <a href="{{ routes.account_register_url }}">Sign up</a>
+      </p>
+      {% endform %}
+    </div>
+  </div>
+
+  <!-- RESET PASSWORD FORM -->
+  <div x-show="pwRecoverForm" x-transition class="login-card">
+
+    <div class="login-header">
+      <img src="{{ 'logo (3).png' | asset_url }}" width="" height="" class="login-logo">
+    </div>
+
+    <div class="login-body">
+
+      <h2 class="login-title">Reset Password</h2>
+      <p class="login-subtitle">Enter your email to receive a reset link</p>
+
+      {% form 'recover_customer_password' %}
+      {{ form.errors | default_errors }}
+
+      <input type="email" name="email" placeholder="Email address" required class="login-input">
+
+      <button type="submit" class="login-btn">Send reset link</button>
+
+      <p class="login-text">
+        <a href="#" x-on:click="loginForm = true; pwRecoverForm = false">Back to login</a>
+      </p>
+      {% endform %}
+    </div>
+  </div>
+
+</section>
+
+
+
+<style>
+  .login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  background: white;
+  border-radius: 18px;
+  border: 2px solid {{ section.settings.theme_color }};
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  transition: 0.3s;
+}
+
+.login-header {
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(to bottom, {{ section.settings.gradient_from }}, {{ section.settings.gradient_to }});
+}
+
+.login-logo {
+  width: 55%;
+  filter: drop-shadow(0 3px 8px rgba(0,0,0,0.35));
+}
+
+.login-body {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.login-title {
+  font-size: 32px;
+  text-align: center;
+  font-weight: 800;
+  background: linear-gradient(to right, #ca8a04, black);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.login-subtitle {
+  text-align: center;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.login-input {
+  width: 100%;            
+  padding: 16px 15px;     
+  font-size: 16px;        
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  margin-bottom: 18px;    
+  transition: 0.25s;
+}
+
+
+.login-input:focus {
+  outline: none;
+  border-color: {{ section.settings.theme_color }};
+  box-shadow: 0 0 0 3px {{ section.settings.theme_color }}33;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom:15px;
+  cursor: pointer;
+  transition: 0.25s;
+  background-color: {{ section.settings.btn_bg }};
+  color: {{ section.settings.btn_text }};
+  border: none;
+}
+
+.login-btn:hover {
+  background-color: {{ section.settings.btn_bg_hover }};
+  color: {{ section.settings.btn_text_hover }};
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.login-text {
+  text-align: center;
+  font-size: 14px;
+}
+
+.login-text a {
+  color: #ca8a04;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-text a:hover {
+  text-decoration: underline;
+  color: black;
+}
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+  .login-title { font-size: 26px; }
+  .login-body { padding: 22px; gap: 18px; }
+  .login-logo { width: 70%; }
+}
+
+</style>
+
+
+{% schema %}
+  {
+    "name": "Customer login",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "add logo"
+      },
+      {
+        "type": "color",
+        "id": "gradient_from",
+        "label": "Gradient start color",
+        "default": "#FDE68A"
+      },
+      {
+        "type": "color",
+        "id": "gradient_to",
+        "label": "Gradient end color",
+        "default": "#FEF9C3"
+      },
+      {
+        "type": "color",
+        "id": "theme_color",
+        "label": "theme color",
+        "default": "#C77632"
+      }, {
+
+        "type": "color",
+        "id": "btn_bg",
+        "label": "Button Background Color",
+        "default": "#C77632"
+      }, {
+        "type": "color",
+        "id": "btn_text",
+        "label": "Button Text Color",
+        "default": "#000000"
+      }, {
+        "type": "color",
+        "id": "btn_bg_hover",
+        "label": "Button Hover Background Color",
+        "default": "#000000"
+      }, {
+        "type": "color",
+        "id": "btn_text_hover",
+        "label": "Button Hover Text Color",
+        "default": "#C77632"
+      }
+
+
+    ]
+  }
+{% endschema %}

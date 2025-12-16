@@ -1,0 +1,87 @@
+<section class="flex flex-col items-center justify-center text-center py-16 min-h-screen px-6">
+  
+  <!-- Optional Image -->
+  <img src="{{ 'error-404.png' |  asset_url }}" alt="" class="w-30 h-30"
+  width=""
+  height="">
+
+  <!-- Heading -->
+  <h1 class="text-4xl md:text-6xl font-extrabold mb-4 text-gray-900">
+    {{ section.settings.title }}
+  </h1>
+
+  <!-- Subtext -->
+  <p class="text-base md:text-lg text-gray-600 max-w-lg mb-8">
+    {{ section.settings.subtext_title }}
+  </p>
+
+  <!-- Optional Search Form -->
+  {% if section.settings.show_search %}
+    <form action="{{ routes.search_url }}" method="get" class="w-full max-w-md mb-6">
+      <input
+        type="text"
+        name="q"
+        placeholder="Search for products..."
+        class="w-full border rounded-md px-4 py-3 text-gray-700 outline-none focus:ring focus:ring-gray-300"
+      />
+    </form>
+  {% endif %}
+
+  <!-- Button -->
+  {% if section.settings.button_url == blank %}
+    {% assign shop_url = routes.root_url %}
+  {% else %}
+    {% assign shop_url = section.settings.button_url %}
+  {% endif %}
+
+  <a  href="{{ shop_url }}"
+    class="px-8 inline py-3 text-base font-medium rounded-md shadow bg-yellow-600 hover:bg-black hover:text-yellow-600 text-black transition">
+    {{ section.settings.button_label }}
+  </a>
+
+</section>
+
+{% schema %}
+{
+  "name": "Custom 404",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero Illustration Image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "404 Heading",
+      "default": "Page Not Found"
+    },
+    {
+      "type": "text",
+      "id": "subtext_title",
+      "label": "Subtext",
+      "default": "Oops! The page you’re looking for doesn’t exist."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show Search Bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Back to Homepage"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL"
+    }
+  ],
+  "presets": [
+    { "name": "Custom 404 Page" }
+  ]
+}
+{% endschema %}

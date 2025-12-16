@@ -1,0 +1,253 @@
+<div class="product-card">
+  <div class="product-card-inner">
+
+    <!-- Product Image Background -->
+    <div class="image-bg">
+      <a href="{{ product_product.url }}" class="product-image-wrapper">
+        {% if product_product.featured_image %}
+          <img
+            src="{{ product_product.featured_image | img_url: 'medium' }}" width="" height=""
+            alt="{{ product_product.featured_image.alt }}"
+            class="product-image">
+        {% else %}
+          {{ 'product-1' | placeholder_svg_tag: 'product-image placeholder' }}
+        {% endif %}
+      </a>
+    </div>
+
+    <!-- Wishlist Icon -->
+    <button
+  type="button"
+  class="wishlist-toggle"
+  data-product-handle="{{ product_product.handle }}"
+  onclick="toggleWishlist(this); event.stopPropagation();"
+  aria-label="Add to wishlist">
+  {% render 'icon-outline-fav' %}
+</button>
+
+    <!-- Product Info -->
+    <div class="product-info">
+
+      <div class="info-row">
+       
+
+        {% assign rating = product_product.metafields.custom.product_rating %}
+        {% assign count = product_product.metafields.custom.review_count %}
+
+        {% if rating %}
+          <div class="rating-chip">
+            <span class="rating-value font-bold">{{ rating }}</span>
+            <span class="rating-star font-extrabold text-sm" style="color:green;">★</span>
+
+            {% if count %}
+              <span class="rating-count">{{ count }}</span>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+
+      <a href="{{ product_product.url }}" class="product-title">
+        {{ product_product.title }}
+      </a>
+   {% if product_product.selected_or_first_available_variant.option1 %}
+  <p class="size-line">
+    Size: {{ product_product.selected_or_first_available_variant.option1 }}
+  </p>
+{% endif %}
+
+      {% assign variant = product_product.selected_or_first_available_variant %}
+
+<div class="price-box">
+
+  <!-- MAIN PRICE -->
+  <span class="price-main">
+    {{ variant.price | money }}
+  </span>
+
+  <!-- COMPARE AT PRICE + DISCOUNT -->
+  {% if variant.compare_at_price > variant.price %}
+    <span class="price-compare">
+      {{ variant.compare_at_price | money }}
+    </span>
+
+    {% assign discount = variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price %}
+    <span class="price-discount">
+      ({{ discount }}% OFF)
+    </span>
+  {% endif %}
+
+</div>
+
+
+    </div>
+
+  </div>
+</div>
+
+
+<style>
+  .product-card {
+  width: 100%;
+}
+
+.product-card-inner {
+  background: #fff;
+  overflow: hidden;
+  position: relative;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.product-card-inner:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.15);
+}
+
+/* IMAGE */
+.image-bg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 10px;
+  background-color: #F5F5F5;
+}
+
+.product-image-wrapper {
+  width: 100%;
+}
+
+.product-image {
+  width: 100%;
+  height: 160px;
+  object-fit: contain;
+  transition: transform 0.4s ease;
+}
+
+.product-card-inner:hover .product-image {
+  transform: scale(1.05);
+}
+
+/* WISHLIST */
+.wishlist-toggle {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: #9ca3af;
+  cursor: pointer;
+}
+
+.wishlist-toggle.active,
+.wishlist-toggle:hover {
+  color: #ef4444;
+}
+
+/* INFO */
+.product-info {
+  padding: 10px 12px 14px;
+}
+
+/* RATING */
+.rating-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: #e5e7eb;
+  padding: 2px 6px;
+  border-radius: 20px;
+  font-size: 11px;
+  width: auto;
+}
+
+/* TITLE */
+.product-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;       /* max 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: 6px;
+  font-size: 14px;
+  font-family:Outfit;
+  font-weight: 500;
+  color: #111827;
+  text-decoration: none;
+  line-height: 1.3;
+}
+
+/* SIZE */
+.size-line {
+  font-size: 12px;
+  color:rgb(5, 21, 56);
+}
+
+/* PRICE */
+.price-box {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.price-main {
+  font-size: 18px;
+  font-weight: 700;
+  color: #d97706;
+}
+
+.price-compare {
+  font-size: 12px;
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+
+.price-discount {
+  font-size: 12px;
+  font-family:Outfit;
+  font-weight: 600;
+  color: #059669;
+}
+
+/* ========================= */
+/* MOBILE OPTIMIZATION       */
+/* ========================= */
+@media (max-width: 767px) {
+
+  .image-bg {
+    padding: 40px 6px;
+  }
+
+  .product-image {
+    height: 120px;
+  }
+
+  .product-info {
+    padding: 8px 8px 12px;
+  }
+
+  .product-title {
+    font-size: 13px;
+    min-height: 32px;
+  }
+
+  .price-main {
+    font-size: 16px;
+  }
+
+  .price-compare,
+  .price-discount {
+    font-size: 11px;
+  }
+
+  .wishlist-toggle {
+    font-size: 20px;
+    top: 8px;
+    right: 8px;
+  }
+}
+
+</style>
+
+
+

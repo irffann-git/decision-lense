@@ -1,0 +1,111 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "sections": {
+      "announsment-bar": {
+        "type": "announsment-bar",
+        "settings": {
+          "announsment_bg_color": "#f6ebdc",
+          "announsmenu_text": "2-Day Delivery - Get your glasses faster!",
+          "font_family": "Outfit",
+          "link_text": "Shop now",
+          "announsmenu_url": "shopify://collections/casual-mens",
+          "link_color": "#cf7d31"
+        }
+      },
+      "header": {
+        "type": "header",
+        "settings": {
+          "bg_color": "#ffffff",
+          "font_family": "Outfit",
+          "icon_color": "#0e2b5c",
+          "mobile_menu_logo": "shopify://shop_images/logo_3.png",
+          "menu": "main-menu",
+          "ph-numebr": "0712 819 79 555"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "footer_logo": "shopify://shop_images/logo_3.png",
+          "address": "Intelligent Automation Limited\nFirst Floor, 4 Longwalk Road\nStockley Park, Uxbridge\nUB11 1FE",
+          "phone": "Tel: +44 (0)20 8432 7749\nFax: +44 (0)20 8432 2751",
+          "facebook_url": "",
+          "linkedin_url": "",
+          "twitter_url": "",
+          "youtube_url": "",
+          "support_title": "SUPPORT",
+          "support_1_text": "Home",
+          "support_1_url": "shopify://collections/frontpage",
+          "support_2_text": "Solutions",
+          "support_2_url": "shopify://blogs/news",
+          "support_3_text": "About us",
+          "support_3_url": "shopify://pages/contact",
+          "support_4_text": "News",
+          "support_4_url": "shopify://blogs/news",
+          "support_5_text": "Contact us",
+          "support_5_url": "shopify://pages/contact",
+          "products_title": "PRODUCTS",
+          "product_1_text": "Plcs",
+          "product_1_url": "",
+          "product_2_text": "Hmis",
+          "product_2_url": "",
+          "product_3_text": "Motion controllers",
+          "product_3_url": "",
+          "product_4_text": "Brushless servo systems",
+          "product_4_url": "",
+          "product_5_text": "Gearboxes",
+          "product_5_url": "",
+          "newsletter_title": "NEWSLETTER",
+          "newsletter_text": "Penatibus consectetur nec nostra sodales rutrum.",
+          "newsletter_button": "SIGN UP NEWSLETTER",
+          "copyright": "Copyright © 2023 Intelligent Automation. All rights reserved."
+        }
+      },
+      "template-wishlist": {
+        "type": "template-wishlist",
+        "settings": {
+          "heading": "My Wishlist",
+          "subheading": "Products you have saved.",
+          "products_per_row": 4
+        }
+      },
+      "main-contact": {
+        "type": "main-contact",
+        "settings": {
+          "title": "Contact Us",
+          "subtitle": "Feel free to contact us anytime — we reply fast",
+          "side_image": "shopify://shop_images/logo_3.png",
+          "button_label": "Send Message",
+          "success_message": "Thank you! Your message has been sent successfully.",
+          "gradient_from": "#fde68a",
+          "gradient_to": "#fef9c3",
+          "theme_color": "#c77632",
+          "btn_bg": "#c77632",
+          "btn_text": "#000000",
+          "btn_bg_hover": "#000000",
+          "btn_text_hover": "#c77632"
+        }
+      }
+    },
+    "content_for_index": [],
+    "blocks": {
+      "14060646107696862457": {
+        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {}
+      }
+    }
+  },
+  "presets": {
+    "Default": {}
+  }
+}

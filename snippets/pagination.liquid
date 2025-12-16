@@ -1,0 +1,170 @@
+{% if pagination.pages > 1 %}
+<nav class="pagination-wrapper" role="navigation">
+
+  <!-- PREVIOUS (ALWAYS VISIBLE) -->
+  {% if pagination.previous %}
+    <a href="{{ pagination.previous.url }}"
+       class="page-arrow prev"
+       aria-label="Previous">
+      ‹
+    </a>
+  {% else %}
+    <span class="page-arrow prev disabled" aria-hidden="true">
+      ‹
+    </span>
+  {% endif %}
+
+  <!-- PAGE NUMBERS -->
+  <ul class="pagination-list">
+    {% for part in pagination.parts %}
+      {% if part.is_link %}
+        <li>
+          <a href="{{ part.url }}" class="page-link">
+            {{ part.title }}
+          </a>
+        </li>
+      {% elsif part.title == pagination.current_page %}
+        <li>
+          <span class="page-current">
+            {{ part.title }}
+          </span>
+        </li>
+      {% else %}
+        <li>
+          <span class="page-disabled">
+            {{ part.title }}
+          </span>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+
+  <!-- NEXT (ALWAYS VISIBLE) -->
+  {% if pagination.next %}
+    <a href="{{ pagination.next.url }}"
+       class="page-arrow next"
+       aria-label="Next">
+      ›
+    </a>
+  {% else %}
+    <span class="page-arrow next disabled" aria-hidden="true">
+      ›
+    </span>
+  {% endif %}
+
+</nav>
+{% endif %}
+
+
+<style>
+ /* WRAPPER */
+.pagination-wrapper{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:20px;              /* ⬅️ MORE SPACE BETWEEN ARROWS & NUMBERS */
+  margin:48px 0;
+  flex-wrap:wrap;
+}
+
+/* LIST */
+.pagination-list{
+  display:flex;
+  gap:12px;              /* ⬅️ EVEN SPACE BETWEEN NUMBERS */
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+
+/* ARROWS */
+.page-arrow{
+  width:56px;
+  height:56px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:#EBEBEB;
+  color:#374151;
+  font-size:32px;        /* ⬅️ BIG & CLEAR */
+  font-weight:700;
+  text-decoration:none;
+  transition:.25s ease;
+}
+
+.page-arrow:hover{
+  background:#F7AA35;
+  color:#000;
+}
+
+/* DISABLED ARROWS */
+.page-arrow.disabled{
+  cursor:not-allowed;
+  pointer-events:none;
+}
+
+/* PAGE LINKS */
+.page-link,
+.page-current,
+.page-disabled{
+  width:44px;            /* ⬅️ SLIGHTLY BIGGER */
+  height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  font-size:14px;
+  font-weight:700;
+}
+
+/* PAGE STATES */
+.page-link{
+  background:#fff;
+  color:#374151;
+  text-decoration:none;
+  transition:.25s ease;
+}
+
+.page-link:hover{
+  background:#F7AA35;
+  color:#000;
+}
+
+.page-current{
+  background:#F7AA35;
+  color:#fff;
+  transform:scale(1.08);
+}
+
+.page-disabled{
+  background:#f3f4f6;
+  color:#9ca3af;
+  border:1px solid #e5e7eb;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+  .pagination-wrapper{
+    gap:14px;
+  }
+
+  .pagination-list{
+    gap:8px;
+  }
+
+  .page-arrow{
+    width:40px;
+    height:40px;
+    font-size:24px;
+  }
+
+  .page-link,
+  .page-current,
+  .page-disabled{
+    width:34px;
+    height:34px;
+    font-size:12px;
+  }
+}
+
+</style>

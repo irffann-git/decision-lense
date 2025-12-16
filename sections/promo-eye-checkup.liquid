@@ -1,0 +1,287 @@
+<section class="two-images-section" style="background-color: {{ section.settings.bg-color }};">
+
+  <div class="three-grid">
+    
+    <!-- LEFT IMAGE (spans 2 columns on desktop) -->
+    <div class="left-image">
+    <a href="{{ section.settings.contact_link }}">
+      <img src="{{ section.settings.left_image | image_url: width: 1600 }}"  width="" height=""
+           alt="" class="img-cover">
+    </a>
+    </div>
+
+    <!-- RIGHT BLOCK (spans 1 column) -->
+    <div class="right-block hidden lg:block">
+
+  {% if section.settings.selected_product != blank %}
+    {% assign product = section.settings.selected_product %}
+  {% endif %}
+
+  <!-- Make the whole circle clickable -->
+  <a href="{{ product.url }}" class="round_prod flex flex-col items-center absolute z-10 rounded-full">
+
+      <!-- Dynamic Product Image -->
+      <img 
+        src="{{ product.featured_image | image_url: width: 350 }}"  width="" height=""
+        class="w-full h-full object-contain rounded-full"
+      >
+
+      <!-- Dynamic Product Price -->
+      <span class="text-3xl font-bold ps-6">
+        Rs{{ product.price | money_without_currency }}/-
+      </span>
+
+  </a>
+
+  <!-- Right Side Main Image -->
+  <img 
+    src="{{ section.settings.right_image | image_url: width: 350 }}" width="" height=""
+    class="w-full h-full object-cover"
+  />
+
+</div>
+
+    
+
+
+  </div>
+  <div class="lg:hidden grid grid-cols-2">
+
+  <div class="col-1 flex justify-center items-center">
+
+    {% if section.settings.selected_product != blank %}
+      {% assign product = section.settings.selected_product %}
+      
+      <!-- Make product clickable on mobile -->
+      <a href="{{ product.url }}" class="md_round_prod flex flex-col items-center rounded-full">
+
+        <!-- Dynamic Product Image -->
+        <img 
+          src="{{ product.featured_image | image_url: width: 350 }}"width="" height=""
+          class="w-full h-full object-contain rounded-full"
+        >
+
+        <!-- Dynamic Product Price -->
+        <span class="md_round_prod_price text-sm sm:text-xl md:text-3xl font-bold md:ps-6">
+          Rs{{ product.price | money_without_currency }}/-
+        </span>
+
+      </a>
+    {% endif %}
+      
+  </div>
+
+  <div class="col-1">
+    <img src="{{ section.settings.right_image | image_url: width: 350 }}"width="" height=""
+         class="w-full h-full object-cover" />
+  </div>
+
+</div>
+
+
+</section>
+
+<style>
+.two-images-section {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Base grid - mobile: 1 column */
+.three-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+  gap:3px;
+  background-color:white;
+}
+.round_prod{
+width:250px;
+height:250px;
+padding:15px;
+margin-top:30px;
+margin-left:-130px;
+padding-bottom:40px;
+background-color:{{ section.settings.product_bg_color }};
+border:10px solid {{ section.settings.product_border_color }}
+}
+.md_round_prod{
+width:300px;
+height:300px;
+padding:17px;
+padding-bottom:40px;
+box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25); /* 🔥 smooth shadow */
+background-color:{{ section.settings.product_bg_color }};
+border:10px solid {{ section.settings.product_border_color }}
+}
+@media (max-width: 630px) {
+  .md_round_prod{
+width:200px;
+height:200px;
+padding:17px;
+padding-bottom:40px;
+box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25); /* 🔥 smooth shadow */
+background-color:{{ section.settings.product_bg_color }};
+border:10px solid {{ section.settings.product_border_color }}
+}
+}
+@media (max-width: 400px) {
+  .md_round_prod{
+width:150px;
+height:150px;
+padding:17px;
+padding-bottom:40px;
+box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25); /* 🔥 smooth shadow */
+background-color:{{ section.settings.product_bg_color }};
+border:10px solid {{ section.settings.product_border_color }}
+}
+}
+
+
+/* Desktop: 3 columns */
+@media (min-width: 1024px) {
+  .three-grid {
+    grid-template-columns: 1fr 1fr 1fr; /* 3 equal columns */
+  }
+
+}
+@media (min-width: 1200px) {
+  .round_prod{
+width:300px;
+height:300px;
+padding:17px;
+margin-top:80px;
+margin-left:-150px;
+padding-bottom:40px;
+background-color:{{ section.settings.product_bg_color }};
+border:10px solid {{ section.settings.product_border_color }}
+}
+}
+@media (min-width: 1300px) {
+  .round_prod{
+width:350px;
+height:350px;
+padding:15px;
+margin-top:80px;
+margin-left:-170px;
+padding-bottom:40px;
+background-color:{{ section.settings.product_bg_color }};
+border:10px solid {{ section.settings.product_border_color }}
+}
+}
+
+
+
+
+
+/* LEFT IMAGE spans 2 columns on desktop */
+.left-image {
+  grid-column: span 1;
+}
+
+@media (min-width: 1024px) {
+  .left-image {
+    grid-column: span 2; /* same as lg:col-2 */
+  }
+}
+
+/* RIGHT SIDE spans 1 column */
+.right-block {
+  grid-column: span 1; /* same as lg:col-1 */
+}
+
+/* Image styling */
+.img-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+</style>
+
+
+
+{% schema %}
+  {
+    "name": "Free Eye Checkup Banner",
+    "settings": [
+        {
+            "type": "color",
+            "id": "bg-color",
+            "label": "bagound color",
+            "default":"#F7AA35"
+        },
+      {
+        "type": "image_picker",
+        "id": "left_image",
+        "label": "Left Main Image"
+      },
+      {
+        "type": "url",
+        "id": "contact_link",
+        "label": "contact link"
+      },
+      {
+        "type": "image_picker",
+        "id": "right_image",
+        "label": "Right Side Image"
+      },
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Main Heading",
+        "default": "Get A Free Eye Checkup"
+      },
+      {
+        "type": "text",
+        "id": "sub_heading",
+        "label": "Call to Action",
+        "default": "Call 1800 23 56879"
+      }, {
+        "type": "text",
+        "id": "website",
+        "label": "Website Link",
+        "default": "Visit:www.decision.lense.com"
+      },
+      {
+        "type": "color",
+        "id": "product_bg_color",
+        "label": "background color",
+        "default":"#FFFFFF"
+      },
+      {
+  "type": "product",
+  "id": "selected_product",
+  "label": "Select a Product"
+},
+ {
+        "type": "color",
+        "id": "product_border_color",
+        "label": "border color",
+        "default":"#F8AC39"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "brand",
+        "name": "Brand Logo",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "brand_logo",
+            "label": "Brand Logo"
+          }
+        ]
+      }
+    ],
+    "max_blocks": 6,
+    "presets": [
+      {
+        "name": "Free Eye Checkup Banner",
+        "category": "Promotions"
+      }
+    ]
+  }
+{% endschema %}
+

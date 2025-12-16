@@ -1,0 +1,250 @@
+<section class="contact-wrapper">
+  <div class="contact-card">
+
+    <!-- Left Image -->
+    <div class="contact-image-box">
+      {% if section.settings.side_image != blank %}
+        <img src="{{ section.settings.side_image | image_url: width: 350 }}" width="" height="" class="contact-side-image">
+      {% else %}
+        <img src="{{ 'logo (3).png' | asset_url }}"  width="" height="" class="contact-side-image">
+      {% endif %}
+    </div>
+
+    <!-- Right Form -->
+    <div class="contact-body">
+      <h1 class="contact-title">{{ section.settings.title }}</h1>
+      <p class="contact-subtitle">{{ section.settings.subtitle }}</p>
+
+      {% form 'contact' %}
+        {% if form.posted_successfully? %}
+          <p class="success-message">{{ section.settings.success_message }}</p>
+        {% endif %}
+
+        {{ form.errors | default_errors }}
+
+        <label class="contact-label">Name</label>
+        <input type="text" name="contact[name]" class="contact-input">
+
+        <label class="contact-label">Email</label>
+        <input type="email" name="contact[email]" class="contact-input">
+
+        <label class="contact-label">Phone</label>
+        <input type="tel" name="contact[phone]" class="contact-input">
+
+        <label class="contact-label">Message</label>
+        <textarea rows="4" name="contact[body]" class="contact-input"></textarea>
+
+        <button type="submit" class="contact-btn">{{ section.settings.button_label }}</button>
+      {% endform %}
+    </div>
+
+  </div>
+</section>
+
+
+<style>
+  .contact-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.contact-card {
+  width: 100%;
+  max-width: 950px;
+  background: white;
+  border-radius: 18px;
+  border: 2px solid {{ section.settings.theme_color }};
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+}
+
+.contact-image-box {
+  width: 100%;
+  padding: 30px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom, {{ section.settings.gradient_from }}, {{ section.settings.gradient_to }});
+  border-right: 2px solid {{ section.settings.theme_color }};
+}
+
+.contact-side-image {
+  width: 70%;
+  filter: drop-shadow(0 3px 8px rgba(0,0,0,0.35));
+}
+
+.contact-body {
+  width: 100%;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.contact-title {
+  font-size: 32px;
+  font-weight: 800;
+  text-align: center;
+  background: linear-gradient(to right, #ca8a04, black);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.contact-subtitle {
+  text-align: center;
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.contact-label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #3a3a3a;
+}
+
+.contact-input {
+  width: 100%;
+  padding: 13px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 1px solid rgb(100, 78, 13);
+  transition: 0.25s;
+  margin-bottom: 10px;
+}
+
+.contact-input:focus {
+  outline: none;
+  border-color: {{ section.settings.theme_color }};
+  box-shadow: 0 0 0 3px {{ section.settings.theme_color }}33;
+}
+
+.contact-btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 17px;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  background: {{ section.settings.btn_bg }};
+  color: {{ section.settings.btn_text }};
+  transition: 0.25s;
+}
+
+.contact-btn:hover {
+  background: {{ section.settings.btn_bg_hover }};
+  color: {{ section.settings.btn_text_hover }};
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+}
+
+.success-message {
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid #16a34a;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* RESPONSIVE */
+/* Show left image on tablet + desktop */
+@media (min-width: 768px) {
+  .contact-card {
+    flex-direction: row;
+  }
+  .contact-image-box {
+    display: flex;
+    width: 40%;
+  }
+  .contact-body {
+    width: 60%;
+  }
+}
+
+/* Mobile improvements */
+@media (max-width: 480px) {
+  .contact-title { font-size: 28px; }
+  .contact-input { font-size: 14px; padding: 12px; }
+  .contact-btn { font-size: 16px; padding: 12px; }
+}
+
+</style>
+
+{% schema %}
+  {
+    "name": "Contact Section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading Title",
+        "default": "Contact Us"
+      },
+      {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Subtitle",
+        "default": "Feel free to contact us anytime — we reply fast"
+      },
+      {
+        "type": "image_picker",
+        "id": "side_image",
+        "label": "Left Side Image"
+      },
+      {
+        "type": "text",
+        "id": "button_label",
+        "label": "Button Label",
+        "default": "Send Message"
+      }, {
+        "type": "text",
+        "id": "success_message",
+        "label": "Success Message",
+        "default": "Thank you! Your message has been sent successfully."
+      }, {
+        "type": "color",
+        "id": "gradient_from",
+        "label": "Gradient Start",
+        "default": "#FDE68A"
+      }, {
+        "type": "color",
+        "id": "gradient_to",
+        "label": "Gradient End",
+        "default": "#FEF9C3"
+      }, {
+        "type": "color",
+        "id": "theme_color",
+        "label": "Border/Theme Color",
+        "default": "#C77632"
+      }, {
+        "type": "color",
+        "id": "btn_bg",
+        "label": "Button Background",
+        "default": "#C77632"
+      }, {
+        "type": "color",
+        "id": "btn_text",
+        "label": "Button Text",
+        "default": "#000000"
+      }, {
+        "type": "color",
+        "id": "btn_bg_hover",
+        "label": "Hover Button Background",
+        "default": "#000000"
+      }, {
+        "type": "color",
+        "id": "btn_text_hover",
+        "label": "Hover Button Text",
+        "default": "#C77632"
+      }
+    ]
+  }
+{% endschema %}

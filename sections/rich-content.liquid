@@ -1,0 +1,145 @@
+<div class="flex justify-center mt-3 pb-4">
+  <div class="flex flex-col max-w-2xl">
+    <div class="mb-3">
+      <h1 class="text-3xl md:text-4xl font-bold text-center" style="color: {{ section.settings.main_heading_color }}; font-family:{{ section.settings.font_family }}">{{ section.settings.main_heading }}</h1>
+    </div>
+    <div class="mb-4">
+      <h3 class="text-center text-md font-bold md:text-xl" style=" font-family:{{ section.settings.font_family }};">{{ section.settings.sub_heading }}</h3>
+
+    </div>
+    <div class="mb-6 px-2">
+      <p class="text-center mb-2 font-semibold text-sm md:text-md">
+        {{ section.settings.text_line_1 }}
+        <span class="font-semibold" style="color: {{ section.settings.highlight_color }}; font-family:{{ section.settings.font_family }}">
+          {{ section.settings.highlight_word_1 }}
+        </span>
+        {{ section.settings.text_line_1_after }}
+      </p>
+
+      <p class="text-center font-semibold text-sm md:text-md">
+        {{ section.settings.text_line_2 }}
+        <span class="font-semibold" style="color: {{ section.settings.highlight_color_2 }}; font-family:{{ section.settings.font_family }}">
+          {{ section.settings.highlight_word_2 }}
+        </span>
+        {{ section.settings.text_line_2_after }}
+      </p>
+    </div>
+
+    <div class="mb-4 mt-2">
+      <div class="flex flex-col px-4 sm:flex-row justify-center gap-2 md:gap-6">
+
+        <a href="{{ section.settings.button_1_link }}" class="border text-sm rounded px-6 text-center py-3 hover:bg-black hover:text-[#D39D4E] transition" style=" font-family:{{ section.settings.font_family }}">
+          {{ section.settings.button_1_text }}
+        </a>
+
+        <a href="{{ section.settings.button_2_link }}" style="color: #D39D4E ; border-color:#D39D4E ;" class="border text-sm rounded px-6 text-center py-3 hover:bg-black hover:text-white transition" style=" font-family:{{ section.settings.font_family }}">
+          {{ section.settings.button_2_text }}
+        </a>
+
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "rich-content",
+    "settings": [
+      {
+        "type": "text",
+        "id": "main_heading",
+        "label": "main heading",
+        "default": "Every Vision of you"
+      },
+            {
+  "type": "select",
+  "id": "font_family",
+  "label": "Font Family",
+  "options": [
+    { "value": "Outfit", "label": "Outfit" },
+    { "value": "Poppins", "label": "Poppins" },
+    { "value": "Inter", "label": "Inter" },
+    { "value": "Roboto", "label": "Roboto" },
+    { "value": "Montserrat", "label": "Montserrat" },
+    { "value": "Lato", "label": "Lato" }
+  ],
+  "default": "Outfit"
+},
+      {
+        "type": "color",
+        "id": "main_heading_color",
+        "label": "main heading color",
+        "default": "#D39D4E"
+      },
+      {
+        "type": "text",
+        "id": "sub_heading",
+        "label": "sub heading text",
+        "default": "It’s always a good day to buy glasses online."
+      },
+      {
+        "type": "text",
+        "id": "text_line_1",
+        "label": "Line 1 — Before Highlight",
+        "default": "Express your every vision with affordable"
+      }, {
+        "type": "text",
+        "id": "highlight_word_1",
+        "label": "Highlight word (Line 1)",
+        "default": "eyeglasses"
+      }, {
+        "type": "color",
+        "id": "highlight_color",
+        "label": "Highlight color (Line 1)",
+        "default": "#D39D4E"
+      }, {
+        "type": "text",
+        "id": "text_line_1_after",
+        "label": "Line 1 — After Highlight",
+        "default": "and prescription sunglasses."
+      }, {
+        "type": "text",
+        "id": "text_line_2",
+        "label": "Line 2 — Before Highlight",
+        "default": "Shop thousands of glasses with Virtual Try-On,"
+      }, {
+        "type": "text",
+        "id": "highlight_word_2",
+        "label": "Highlight word (Line 2)",
+        "default": "2-Day Delivery"
+      }, {
+        "type": "color",
+        "id": "highlight_color_2",
+        "label": "Highlight color (Line 2)",
+        "default": "#D39D4E"
+      }, {
+        "type": "text",
+        "id": "text_line_2_after",
+        "label": "Line 2 — After Highlight",
+        "default": "and frames starting at just $6!"
+      }, {
+        "type": "text",
+        "id": "button_1_text",
+        "label": "Button 1 Text",
+        "default": "Shop Eyeglasses"
+      }, {
+        "type": "url",
+        "id": "button_1_link",
+        "label": "Button 1 Link"
+      }, {
+        "type": "text",
+        "id": "button_2_text",
+        "label": "Button 2 Text",
+        "default": "Shop Sunglasses"
+      }, {
+        "type": "url",
+        "id": "button_2_link",
+        "label": "Button 2 Link"
+      }
+
+
+    ]
+  }
+{% endschema %}

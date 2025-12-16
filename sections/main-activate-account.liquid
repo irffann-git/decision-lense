@@ -1,0 +1,23 @@
+<section class="min-h-screen flex items-center justify-center bg-white px-4">
+  {% form 'activate_customer_password' %}
+    {{ form.errors | default_errors }}
+
+    <div class="w-full max-w-md bg-white border-2 border-yellow-600 rounded-2xl shadow-xl p-8 space-y-6 text-center">
+      <h2 class="text-3xl font-bold">Activate Account</h2>
+      <p class="text-gray-600 text-sm">Create your password to activate your account</p>
+
+      <input type="password" name="customer[password]" placeholder="Create password"
+             class="w-full px-4 py-3 border rounded-md focus:ring-2 focus:ring-yellow-400 outline-none bg-gray-50">
+      <input type="password" name="customer[password_confirmation]" placeholder="Confirm password"
+             class="w-full px-4 py-3 border rounded-md focus:ring-2 focus:ring-yellow-400 outline-none bg-gray-50">
+
+      <button type="submit"
+              class="w-full py-3 text-lg font-semibold text-black bg-yellow-600 rounded-md hover:bg-black hover:text-yellow-600 transition">
+        Activate Account
+      </button>
+
+      <a href="{{ shop.url }}"
+         class="block text-sm text-gray-600 hover:underline">Cancel</a>
+    </div>
+  {% endform %}
+</section>

@@ -1,0 +1,457 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero-banner": {
+      "type": "hero-banner",
+      "settings": {
+        "bg_color": "#c77632",
+        "banner_image_bg_color": "#fae6cb",
+        "plant_image": "shopify://shop_images/hero_banner_plant.png",
+        "main_image_1": "shopify://shop_images/rttdd_1.png",
+        "main_image_2": "shopify://shop_images/pm0549_copy_1.png",
+        "main_image_3": "shopify://shop_images/iii_1.png",
+        "small_text": "Standard collection for urban lifestyle.",
+        "small_text_font_style": "font-playfair",
+        "heading": "Chiffon  top stylish specs in 2023",
+        "main_text_font_style": "Outfit",
+        "heading_font_size": 56,
+        "button_label": "SHOP NOW",
+        "button_bg_color": "#f5b32c",
+        "button_hover_color": "#000000",
+        "button_icon_color": "#1f2937",
+        "button_icon_hover_color": "#f5b32c",
+        "button_link": "shopify://collections/all-products"
+      }
+    },
+    "service-banner": {
+      "type": "service-banner",
+      "blocks": {
+        "service_item_w6ikpb": {
+          "type": "service_item",
+          "settings": {
+            "service_icon": "shopify://shop_images/product-return_1.png",
+            "text": "14-Day Free Returns",
+            "items_link": "",
+            "text_color": "#6f6f6f"
+          }
+        },
+        "service_item_8fUUNV": {
+          "type": "service_item",
+          "settings": {
+            "service_icon": "shopify://shop_images/insurance.png",
+            "text": "24/7 Customer Service",
+            "items_link": "",
+            "text_color": "#6f6f6f"
+          }
+        },
+        "service_item_PwfnRp": {
+          "type": "service_item",
+          "settings": {
+            "service_icon": "shopify://shop_images/customer-care_1.png",
+            "text": "Vision Insurance",
+            "items_link": "",
+            "text_color": "#6f6f6f"
+          }
+        },
+        "service_item_Pe6Lb6": {
+          "type": "service_item",
+          "settings": {
+            "service_icon": "shopify://shop_images/free-delivery_1.png",
+            "text": "Free delivery above 499",
+            "items_link": "",
+            "text_color": "#6f6f6f"
+          }
+        },
+        "service_item_zU8VR3": {
+          "type": "service_item",
+          "settings": {
+            "service_icon": "shopify://shop_images/Frame_2.png",
+            "text": "216k+ Reviews",
+            "items_link": "",
+            "text_color": "#6f6f6f"
+          }
+        }
+      },
+      "block_order": [
+        "service_item_w6ikpb",
+        "service_item_8fUUNV",
+        "service_item_PwfnRp",
+        "service_item_Pe6Lb6",
+        "service_item_zU8VR3"
+      ],
+      "settings": {
+        "bg-color": "#f5f5f5"
+      }
+    },
+    "collection-rounded": {
+      "type": "collection-rounded",
+      "blocks": {
+        "collection_item_Tz44Ee": {
+          "type": "collection_item",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_50.png",
+            "title": "Formal women’s",
+            "font_color": "#6f6f6f",
+            "font_family": "Outfit",
+            "link": "shopify://collections/formal-womens"
+          }
+        },
+        "collection_item_VgCKyg": {
+          "type": "collection_item",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_65.png",
+            "title": "Formal men’s",
+            "font_color": "#6f6f6f",
+            "font_family": "Outfit",
+            "link": "shopify://collections/formal-mens"
+          }
+        },
+        "collection_item_wMBWQt": {
+          "type": "collection_item",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_63.png",
+            "title": "Casual women’s",
+            "font_color": "#6f6f6f",
+            "font_family": "Outfit",
+            "link": "shopify://collections/casual-womens"
+          }
+        },
+        "collection_item_qtehPq": {
+          "type": "collection_item",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_62.png",
+            "title": "Casual men’s",
+            "font_color": "#6f6f6f",
+            "font_family": "Outfit",
+            "link": "shopify://collections/casual-mens"
+          }
+        },
+        "collection_item_xyn9re": {
+          "type": "collection_item",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_67.png",
+            "title": "Classic collection",
+            "font_color": "#6f6f6f",
+            "font_family": "Outfit",
+            "link": "shopify://collections/classic-collection"
+          }
+        },
+        "collection_item_BF7yRN": {
+          "type": "collection_item",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_70.png",
+            "title": "Kid’s collection",
+            "font_color": "#6f6f6f",
+            "font_family": "Outfit",
+            "link": "shopify://collections/kids-collections"
+          }
+        },
+        "collection_item_pYJrWQ": {
+          "type": "collection_item",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_69.png",
+            "title": "Protection Glass",
+            "font_color": "#6f6f6f",
+            "font_family": "Outfit",
+            "link": "shopify://collections/protection-glasses"
+          }
+        },
+        "collection_item_rACdck": {
+          "type": "collection_item",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_71.png",
+            "title": "Eye Lenses",
+            "font_color": "#6f6f6f",
+            "font_family": "Outfit",
+            "link": "shopify://collections/eye-lenses"
+          }
+        }
+      },
+      "block_order": [
+        "collection_item_Tz44Ee",
+        "collection_item_VgCKyg",
+        "collection_item_wMBWQt",
+        "collection_item_qtehPq",
+        "collection_item_xyn9re",
+        "collection_item_BF7yRN",
+        "collection_item_pYJrWQ",
+        "collection_item_rACdck"
+      ],
+      "settings": {
+        "heading": "Shop by Collections"
+      }
+    },
+    "rich-content": {
+      "type": "rich-content",
+      "settings": {
+        "main_heading": "Every Vision of you",
+        "font_family": "Outfit",
+        "main_heading_color": "#d39d4e",
+        "sub_heading": "It’s always a good day to buy glasses online.",
+        "text_line_1": "Express your every vision with affordable",
+        "highlight_word_1": "eyeglasses",
+        "highlight_color": "#d39d4e",
+        "text_line_1_after": "and prescription sunglasses.",
+        "text_line_2": "Shop thousands of glasses with Virtual Try-On,",
+        "highlight_word_2": "2-Day Delivery",
+        "highlight_color_2": "#d39d4e",
+        "text_line_2_after": "and frames starting at just $6!",
+        "button_1_text": "Shop Eyeglasses",
+        "button_1_link": "shopify://collections/eye-lenses",
+        "button_2_text": "Shop Sunglasses",
+        "button_2_link": "shopify://collections/eye-lenses"
+      }
+    },
+    "demo-images": {
+      "type": "demo-images",
+      "blocks": {
+        "image_block_RNyAGn": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_80.png",
+            "title": "Category"
+          }
+        },
+        "image_block_FR96fM": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_81.png",
+            "title": "Category"
+          }
+        },
+        "image_block_t8mC7a": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_82.png",
+            "title": "Category"
+          }
+        },
+        "image_block_WbCVFg": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_83_1.png",
+            "title": "Category"
+          }
+        }
+      },
+      "block_order": [
+        "image_block_RNyAGn",
+        "image_block_FR96fM",
+        "image_block_t8mC7a",
+        "image_block_WbCVFg"
+      ],
+      "settings": {}
+    },
+    "glass-shape-collection": {
+      "type": "glass-shape-collection",
+      "blocks": {
+        "shape_block_qinpnK": {
+          "type": "shape_block",
+          "settings": {
+            "image": "shopify://shop_images/image_9.png",
+            "bg_color": "#f5f5f5",
+            "title": "Retro Aviator",
+            "link": "shopify://collections/retro-aviator"
+          }
+        },
+        "shape_block_VMJpF6": {
+          "type": "shape_block",
+          "settings": {
+            "image": "shopify://shop_images/image_6.png",
+            "bg_color": "#f5f5f5",
+            "title": "Round",
+            "link": "shopify://collections/rounded"
+          }
+        },
+        "shape_block_3r3XBA": {
+          "type": "shape_block",
+          "settings": {
+            "image": "shopify://shop_images/image_7.png",
+            "bg_color": "#f5f5f5",
+            "title": "Rectangle",
+            "link": "shopify://collections/rectangle"
+          }
+        },
+        "shape_block_nx9Y8T": {
+          "type": "shape_block",
+          "settings": {
+            "image": "shopify://shop_images/image_8.png",
+            "bg_color": "#f5f5f5",
+            "title": "Geometric",
+            "link": "shopify://collections/geometric"
+          }
+        },
+        "shape_block_KRVCrM": {
+          "type": "shape_block",
+          "settings": {
+            "image": "shopify://shop_images/image_10.png",
+            "bg_color": "#f5f5f5",
+            "title": "Brow line",
+            "link": "shopify://collections/brow-line"
+          }
+        }
+      },
+      "block_order": [
+        "shape_block_qinpnK",
+        "shape_block_VMJpF6",
+        "shape_block_3r3XBA",
+        "shape_block_nx9Y8T",
+        "shape_block_KRVCrM"
+      ],
+      "settings": {
+        "heading": "Wear the Shape Trends"
+      }
+    },
+    "glass-premium-collections": {
+      "type": "glass-premium-collections",
+      "settings": {
+        "image_1": "shopify://shop_images/Rectangle_63_1.png",
+        "title_1": "Vintage Collections",
+        "link_1": "shopify://collections/vintage-collections",
+        "image_2": "shopify://shop_images/Rectangle_64.png",
+        "title_2": "Celebrities Collections",
+        "link_2": "shopify://collections/celebrities-collections",
+        "image_3": "shopify://shop_images/Rectangle_62_1.png",
+        "title_3": "Premium Collections",
+        "link_3": "shopify://collections/premium-collection"
+      }
+    },
+    "4-way-to-wear": {
+      "type": "4-way-to-wear",
+      "settings": {
+        "bg-color": "#eaeaea",
+        "font_family": "Outfit",
+        "heading": "4 Ways to Wear",
+        "image": "shopify://shop_images/BARTON_4WTW_1.png",
+        "title_1": "SUNGLASESS",
+        "text_1_url": "",
+        "title_2": "PRESCRIPTION",
+        "text_2_url": "",
+        "title_3": "SUNGLASESS",
+        "text_3_url": "",
+        "title_4": "EYEGLASSES READERS",
+        "text_4_url": ""
+      }
+    },
+    "promo-banner": {
+      "type": "promo-banner",
+      "settings": {
+        "bg-color": "#fbf7f6",
+        "main_image": "shopify://shop_images/Mask_group.png",
+        "font_style": "Outfit",
+        "top_text": "Spotlight-Worthy Sunglasses",
+        "heading": "BUY 1 GET 1",
+        "links": "shopify://collections/vintage-collections"
+      }
+    },
+    "latest-product": {
+      "type": "latest-product",
+      "settings": {
+        "heading": "Latest Products",
+        "collection": "all-products",
+        "bg_color": "#f5f5f5",
+        "font_family": "Outfit",
+        "product_limit": 10
+      }
+    },
+    "promo-eye-checkup": {
+      "type": "promo-eye-checkup",
+      "blocks": {
+        "brand_nMK9UF": {
+          "type": "brand",
+          "settings": {
+            "brand_logo": "shopify://shop_images/Exclusive.png"
+          }
+        }
+      },
+      "block_order": [
+        "brand_nMK9UF"
+      ],
+      "settings": {
+        "bg-color": "#f7aa35",
+        "left_image": "shopify://shop_images/Retangle_88_1_9d8d9b71-2390-48b2-89a9-24f5e085966a.png",
+        "contact_link": "shopify://pages/contact",
+        "right_image": "shopify://shop_images/Rectangle_89.png",
+        "heading": "Get A Free Eye Checkup",
+        "sub_heading": "Call 1800 23 56879",
+        "website": "Visit:www.decision.lense.com",
+        "product_bg_color": "#ffffff",
+        "selected_product": "j",
+        "product_border_color": "#f8ac39"
+      }
+    },
+    "vision_card_eJgFXj": {
+      "type": "vision-card",
+      "blocks": {
+        "card_WYgWJn": {
+          "type": "card",
+          "settings": {
+            "card_image": "shopify://shop_images/Mask_group_2.png",
+            "card_title": "Bohemia Renewal",
+            "card_description": "Earth-friendly and free-spirited eyewear for the modern bohemian.",
+            "font_family2": "Outfit",
+            "button_label": "Shop Now",
+            "button_link": "shopify://collections/formal-mens"
+          }
+        },
+        "card_WyVjCn": {
+          "type": "card",
+          "settings": {
+            "card_image": "shopify://shop_images/Mask_group_1.png",
+            "card_title": "Glasses On Sale",
+            "card_description": "Earth-friendly and free-spirited eyewear for the modern bohemian.",
+            "font_family2": "Outfit",
+            "button_label": "Shop Now",
+            "button_link": "shopify://collections/casual-womens"
+          }
+        },
+        "card_Y6QGgF": {
+          "type": "card",
+          "settings": {
+            "card_image": "shopify://shop_images/image_14.png",
+            "card_title": "Fit & Style Quiz",
+            "card_description": "Earth-friendly and free-spirited eyewear for the modern bohemian.",
+            "font_family2": "Outfit",
+            "button_label": "Take Quick",
+            "button_link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "card_WYgWJn",
+        "card_WyVjCn",
+        "card_Y6QGgF"
+      ],
+      "name": "Vision Collection Cards",
+      "settings": {
+        "heading": "Every Vision of you",
+        "heading_color": "#d39d4e",
+        "font_family": "Outfit",
+        "sub_heading": "It's always a good day to buy glasses online.",
+        "sub_heading_color": "#000000"
+      }
+    }
+  },
+  "order": [
+    "hero-banner",
+    "service-banner",
+    "collection-rounded",
+    "rich-content",
+    "demo-images",
+    "glass-shape-collection",
+    "glass-premium-collections",
+    "4-way-to-wear",
+    "promo-banner",
+    "latest-product",
+    "promo-eye-checkup",
+    "vision_card_eJgFXj"
+  ]
+}

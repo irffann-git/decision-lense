@@ -1,0 +1,322 @@
+<section class="w-full py-12 mb-5 bg-white">
+  <div class="max-w-7xl mx-auto px-4">
+
+    <h2 class="text-center text-3xl font-semibold mb-10">
+      {{ section.settings.heading }}
+    </h2>
+
+    {% if section.settings.collection %}
+      {% assign prods = section.settings.collection.products %}
+    {% else %}
+      {% assign prods = collections.all.products %}
+    {% endif %}
+
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+
+      {% for product in prods limit: section.settings.product_limit %}
+      <div class="product-card">
+
+        <!-- ❤️ Wishlist Icon -->
+        <button
+          type="button"
+          class="wishlist-toggle"
+          data-product-handle="{{ product.handle }}"
+          aria-label="Add to wishlist">
+          {% render 'icon-outline-fav' %}
+        </button>
+
+        <!-- Product Link Block -->
+        <a href="{{ product.url }}" class="group flex flex-col gap-2">
+
+          <!-- Image -->
+          <div class="img-box">
+            <img
+              src="{{ product.featured_image | image_url: width: 400 }}"
+              alt="{{ product.title }}"
+              width="400"
+              height="400"
+              class="product-img group-hover:scale-105">
+          </div>
+
+          <!-- Rating -->
+          {% assign rating = product.metafields.custom.product_rating %}
+          {% assign count = product.metafields.custom.review_count %}
+
+          {% if rating %}
+          <div class="rating-box">
+            <span class="rating-num">{{ rating }}</span>
+            <span class="star">★</span>
+            {% if count %}
+              <span class="rating-count">{{ count }}</span>
+            {% endif %}
+          </div>
+          {% endif %}
+
+          <!-- Title -->
+          <span class="product-title">{{ product.title }}</span>
+
+          <!-- Variant Size -->
+          {% if product.selected_or_first_available_variant.option1 %}
+          <p class="size-line text-md">
+            <span>Size:</span>
+            <strong>{{ product.selected_or_first_available_variant.option1 }}</strong>
+          </p>
+          {% endif %}
+
+          <!-- Price + Discount -->
+          {% assign variant = product.selected_or_first_available_variant %}
+
+          <div class="price-box">
+
+            <span class="price-main">{{ variant.price | money }}</span>
+
+            {% if variant.compare_at_price > variant.price %}
+              <span class="price-compare">{{ variant.compare_at_price | money }}</span>
+
+              {% assign discount = variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price %}
+              <span class="price-discount">({{ discount }}% OFF)</span>
+            {% endif %}
+
+          </div>
+
+        </a>
+
+      </div>
+      {% endfor %}
+
+    </div>
+
+  </div>
+</section>
+<script>
+ <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  let wishlist = JSON.parse(localStorage.getItem("wishlist_items")) || [];
+
+  document.querySelectorAll(".wishlist-toggle").forEach(btn => {
+
+    let handle = btn.dataset.productHandle;
+
+    // Set active state on load
+    if (wishlist.includes(handle)) {
+      btn.classList.add("active");
+    }
+
+    function toggleWishlist(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      // ADD to wishlist
+      if (!wishlist.includes(handle)) {
+        wishlist.push(handle);
+        btn.classList.add("active");
+      } 
+      // REMOVE from wishlist
+      else {
+        wishlist = wishlist.filter(item => item !== handle);
+        btn.classList.remove("active");
+      }
+
+      // Save back to localStorage
+      localStorage.setItem("wishlist_items", JSON.stringify(wishlist));
+    }
+
+    btn.addEventListener("click", toggleWishlist);
+    btn.addEventListener("touchstart", toggleWishlist, { passive: false });
+
+  });
+});
+</script>
+
+
+</script>
+
+
+<style>
+  /* Product Card Wrapper */
+.product-card {
+  position: relative;
+}
+
+/* Wishlist Icon */
+.wishlist-toggle {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 20;
+  pointer-events: auto;
+  z-index: 9999;  
+
+  width: 42px;
+  height: 42px;
+
+  font-size: 25px;
+  color: gray;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  transition: .3s;
+}
+.wishlist-toggle {
+  position: absolute;
+  z-index: 10; /* higher than the <a> */
+}
+
+.wishlist-toggle.active,
+.wishlist-toggle:hover {
+  color: red !important;
+}
+
+/* Image Box */
+.img-box {
+  background:{{ section.settings.bg_color}};
+  height: 100%;
+  padding: 70px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: .3s;
+}
+
+/* Rating */
+.rating-box {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  background: #E5E7EB;
+  padding: 3px 8px;
+  width: 72px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.rating-num { font-weight: 600; }
+.star { color: #16A34A; }
+.rating-count { color: #6B7280; }
+
+/* Title */
+.product-title {
+  color: #374151;
+  font-size: 14px;
+  font-weight: 600;
+  font-Family:{{ section.settings.font_family }};
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Size Line */
+.size-line {
+  font-size: 13px;
+  color: #3b82f6;
+}
+
+.size-line span {
+  font-weight: 600;
+  font-Family:{{ section.settings.font_family }};
+}
+
+/* Pricing */
+.price-box {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.price-main {
+  font-size: 17px;
+  font-weight: 700;
+  color: #d97706;
+}
+
+.price-compare {
+  font-size: 12px;
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+
+.price-discount {
+  font-size: 12px;
+  font-Family:{{ section.settings.font_family }};
+  color: #059669;
+}
+@media screen and (max-width: 480px){
+  .price-main {
+  font-size: 15px;
+  }
+.price-discount {
+  font-size: 10px;
+}
+.price-compare {
+  font-size: 10px;
+}
+
+}
+
+</style>
+
+
+{% schema %}
+  {
+    "name": "Latest Products",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Latest Products"
+      }, {
+        "type": "collection",
+        "id": "collection",
+        "label": "Choose Collection"
+      },{
+        "type": "color",
+        "id": "bg_color",
+        "label": "Baground color",
+        "default":"#F5F5F5"
+      
+      },
+       {
+          "type": "select",
+          "id": "font_family",
+          "label": "Font Family",
+          "options": [
+            { "value": "Outfit", "label": "Outfit" },
+            { "value": "Poppins", "label": "Poppins" },
+            { "value": "Inter", "label": "Inter" },
+            { "value": "Roboto", "label": "Roboto" },
+            { "value": "Montserrat", "label": "Montserrat" },
+            { "value": "Lato", "label": "Lato" }
+          ],
+          "default": "Outfit"
+        }
+      
+      ,{
+        "type": "range",
+        "id": "product_limit",
+        "label": "Number of products to show",
+        "min": 4,
+        "max": 20,
+        "step": 1,
+        "default": 10
+      }
+    ],
+    "presets": [
+      {
+        "name": "Latest Products"
+      }
+    ]
+  }
+{% endschema %}

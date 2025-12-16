@@ -1,0 +1,183 @@
+{% paginate blog.articles by 6 %}
+
+<div class="blog-wrapper">
+
+  <h1 class="blog-title">{{ blog.title }}</h1>
+
+  {% if blog.articles.size == 0 %}
+    <p class="blog-no-posts">No news available right now — please check back later.</p>
+  {% else %}
+
+  <div class="blog-grid">
+    {% for article in blog.articles %}
+      <div class="blog-card">
+
+        {% if article.image %}
+          <a href="{{ article.url }}" class="blog-card-img-wrapper">
+            <img
+              src="{{ article.image | image_url: width: 800 }}"
+              alt="{{ article.title }}"
+              class="blog-card-img">
+          </a>
+        {% endif %}
+
+        <div class="blog-card-body">
+
+          <a href="{{ article.url }}" class="blog-card-title">
+            {{ article.title }}
+          </a>
+
+          <p class="blog-card-meta">
+            {{ article.created_at | date: "%B %d, %Y" }}
+          </p>
+
+          <p class="blog-card-text">
+            {% if article.excerpt != blank %}
+              {{ article.excerpt }}
+            {% else %}
+              {{ article.content | strip_html | truncatewords: 30 }}
+            {% endif %}
+          </p>
+
+          <a href="{{ article.url }}" class="blog-card-btn">
+            Read More →
+          </a>
+
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% endif %}
+
+  {% if paginate.pages > 1 %}
+    <div class="blog-pagination">
+      {{ paginate | default_pagination }}
+    </div>
+  {% endif %}
+
+</div>
+
+{% endpaginate %}
+
+
+
+<style>
+
+.blog-wrapper {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 60px 24px;
+}
+
+/* Title */
+.blog-title {
+  text-align: center;
+  font-size: 46px;
+  font-weight: 800;
+  margin-bottom: 55px;
+  background: linear-gradient(to right, #ffe500,rgb(7, 7, 7));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* No posts available */
+.blog-no-posts {
+  text-align: center;
+  font-size: 20px;
+  color: #cccccc;
+  margin-top: 40px;
+}
+
+/* Grid */
+.blog-grid {
+  display: grid;
+  gap: 36px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+/* Card */
+.blog-card {
+  background: #0E131D;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+  transition: 0.35s;
+}
+.blog-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
+}
+
+/* Image wrapper */
+.blog-card-img-wrapper {
+  display: block;
+  overflow: hidden;
+}
+.blog-card-img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  transition: 0.4s ease;
+}
+.blog-card:hover .blog-card-img {
+  transform: scale(1.07);
+}
+
+/* Body */
+.blog-card-body {
+  padding: 24px;
+}
+
+/* Title */
+.blog-card-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: none;
+  margin-bottom: 10px;
+  display: block;
+  transition: 0.25s;
+}
+.blog-card-title:hover {
+  color: #ffd000;
+}
+
+/* Date */
+.blog-card-meta {
+  font-size: 13px;
+  color: #9ca3af;
+  margin-bottom: 14px;
+}
+
+/* Text */
+.blog-card-text {
+  font-size: 16px;
+  color: #d4d4d4;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+/* Button */
+.blog-card-btn {
+  background: #FFD000;
+  padding: 11px 20px;
+  border-radius: 6px;
+  color: #000;
+  font-weight: 700;
+  text-decoration: none;
+  transition: 0.25s;
+  display: inline-block;
+}
+.blog-card-btn:hover {
+  background: #e6bf00;
+}
+
+/* Pagination */
+.blog-pagination {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+  </style>

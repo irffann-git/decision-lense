@@ -1,0 +1,106 @@
+<section class="w-full py-12 bg-white">
+  <div class="max-w-full mx-auto">
+
+    <!-- Desktop Grid -->
+    <div class="desktop-grid grid grid-cols-4">
+      {% for block in section.blocks %}
+        {% if block.settings.image != blank %}
+          <img
+            src="{{ block.settings.image | image_url: width: 600 }}"
+            alt="{{ block.settings.title }}"
+            width="600"
+            height="400"
+            class="w-full h-full object-cover">
+        {% else %}
+          {{ 'collection-1' | placeholder_svg_tag: 'w-full h-full object-cover' }}
+        {% endif %}
+
+
+      {% endfor %}
+    </div>
+
+    <!-- Mobile / Tablet Swiper -->
+    <div class="mobile-swiper swiper mySwiper mt-6">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide px-2">
+            {% if block.settings.image != blank %}
+              <img
+                src="{{ block.settings.image | image_url: width: 500 }}"
+                alt="{{ block.settings.title }}"
+                width="500"
+                height="333"
+                class="w-full h-full object-cover" />
+            {% else %}
+              {{ 'collection-1' | placeholder_svg_tag: 'w-full h-full object-cover' }}
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+<style>
+  /* Default (mobile/tablet) */
+  .desktop-grid {
+    display: none;
+  }
+  .mobile-swiper {
+    display: block;
+  }
+
+  /* Desktop ≥1024px */
+  @media (min-width: 604px) {
+    .desktop-grid {
+      display: grid !important;
+    }
+    .mobile-swiper {
+      display: none !important;
+    }
+  }
+</style>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    new Swiper(".mySwiper", {
+      loop: true,
+      slidesPerView: 1,
+      spaceBetween: 20,
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+      },
+      pagination: false,
+    });
+  });
+</script>
+
+
+{% schema %}
+  {
+    "name": "4 Image Slider / Grid",
+    "blocks": [
+      {
+        "type": "image_block",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Upload Image"
+          }, {
+            "type": "text",
+            "id": "title",
+            "label": "Image Title",
+            "default": "Category"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

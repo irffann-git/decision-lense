@@ -1,0 +1,298 @@
+<section class="register-wrapper">
+  {% form 'create_customer' %}
+  <div class="register-card">
+
+    <div class="register-header">
+      {% if section.settings.logo != blank %}
+        <img src="{{ section.settings.logo | image_url: width: 300 }}" width="" height="" class="register-logo">
+      {% else %}
+        <img src="{{ 'logo (3).png' | asset_url }}"width="" height=""  class="register-logo">
+      {% endif %}
+    </div>
+
+    <div class="register-body">
+
+      {% if form.errors %}
+        <div class="register-error">
+          This email address is already associated with an account. If this account is yours, you can
+          <a href="{{ routes.account_login_url }}#recover">Reset your password</a>
+        </div>
+      {% endif %}
+
+      <h2 class="register-title">Create Account</h2>
+      <p class="register-subtitle">Register to start your journey with us</p>
+
+      <input type="text" name="customer[first_name]" placeholder="First Name" required class="register-input">
+      <input type="text" name="customer[last_name]" placeholder="Last Name" required class="register-input">
+      <input type="email" name="customer[email]" placeholder="Email address" required class="register-input">
+      <input type="password" name="customer[password]" placeholder="Password" required class="register-input">
+
+      <button type="submit" class="register-btn">Create Account</button>
+
+      <p class="register-login-text">
+        Already have an account?
+        <a href="{{ routes.account_login_url }}">Login</a>
+      </p>
+
+    </div>
+  </div>
+  {% endform %}
+</section>
+
+
+
+<style>
+ .register-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 420px;
+  background: white;
+  border-radius: 18px;
+  border: 2px solid {{ section.settings.theme_color }};
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+}
+
+.register-header {
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(
+    to bottom,
+    {{ section.settings.gradient_from }},
+    {{ section.settings.gradient_to }}
+  );
+}
+
+.register-logo {
+  width: 55%;
+  filter: drop-shadow(0 3px 8px rgba(0,0,0,0.35));
+}
+
+.register-body {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.register-error {
+  background: #fee2e2;
+  border: 1px solid #ef4444;
+  color: #991b1b;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 10px;
+}
+
+.register-error a {
+  font-weight: 500;
+  text-decoration: underline;
+  color: #c27d12;
+}
+
+.register-title {
+  font-size: 32px;
+  text-align: center;
+  font-weight: 800;
+  padding:40px;
+  padding-top:0;
+  padding-bottom:0;
+  background: linear-gradient(to right, #ca8a04, black);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.register-subtitle {
+  text-align: center;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.register-input {
+  padding: 14px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  transition: 0.25s;
+}
+
+.register-input:focus {
+  outline: {{ section.settings.theme_color }} ;
+  border-color: {{ section.settings.theme_color }};
+  box-shadow: 0 0 0 3px {{ section.settings.theme_color }}33;
+}
+
+.register-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+  background-color: {{ section.settings.btn_bg }};
+  color: {{ section.settings.btn_text }};
+  border: none;
+}
+
+.register-btn:hover {
+  background-color: {{ section.settings.btn_bg_hover }};
+  color: {{ section.settings.btn_text_hover }};
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.register-login-text {
+  text-align: center;
+  font-size: 14px;
+}
+
+.register-login-text a {
+  color: #ca8a04;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.register-login-text a:hover {
+  text-decoration: underline;
+  color: black;
+}
+/* 📌 Mobile (max-width 480px) */
+@media screen and (max-width: 480px) {
+
+  .register-card {
+    max-width: 95%;
+    border-radius: 14px;
+  }
+
+  .register-header {
+    padding: 20px;
+  }
+
+  .register-logo {
+    width: 70%;
+  }
+
+  .register-body {
+    padding: 22px;
+    gap: 18px;
+  }
+
+  .register-title {
+    font-size: 26px;
+  }
+
+  .register-subtitle {
+    font-size: 13px;
+  }
+
+  .register-input {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .register-btn {
+    font-size: 16px;
+    padding: 12px;
+  }
+}
+
+/* 📌 Tablet (481px – 768px) */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+
+  .register-card {
+    max-width: 450px;
+  }
+
+  .register-logo {
+    width: 60%;
+  }
+
+  .register-title {
+    font-size: 30px;
+  }
+}
+
+/* 📌 Large Screens (desktops > 1200px) */
+@media screen and (min-width: 1200px) {
+
+  .register-card {
+    max-width: 500px; /* slightly bigger on large screens */
+  }
+
+  .register-title {
+    font-size: 36px;
+  }
+
+  .register-input {
+    font-size: 16px;
+    padding: 16px;
+  }
+
+  .register-btn {
+    font-size: 19px;
+  }
+}
+
+
+</style>
+
+
+{% schema %}
+  {
+    "name": "Register",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Add Logo"
+      },
+      {
+        "type": "color",
+        "id": "gradient_from",
+        "label": "Gradient Start",
+        "default": "#FDE68A"
+      },
+      {
+        "type": "color",
+        "id": "gradient_to",
+        "label": "Gradient End",
+        "default": "#FEF9C3"
+      },
+      {
+        "type": "color",
+        "id": "theme_color",
+        "label": "Theme / Border Color",
+        "default": "#C77632"
+      }, {
+        "type": "color",
+        "id": "btn_bg",
+        "label": "Button Background",
+        "default": "#C77632"
+      }, {
+        "type": "color",
+        "id": "btn_text",
+        "label": "Button Text",
+        "default": "#000000"
+      }, {
+        "type": "color",
+        "id": "btn_bg_hover",
+        "label": "Hover Button Background",
+        "default": "#000000"
+      }, {
+        "type": "color",
+        "id": "btn_text_hover",
+        "label": "Hover Button Text",
+        "default": "#C77632"
+      }
+    ]
+  }
+{% endschema %}

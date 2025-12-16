@@ -104,66 +104,58 @@
                   {% endif %}
 
 
-                {% when 'price_range' %}
+{% when 'price_range' %}
 
-                  {% liquid
-                    assign min_value = filter.min_value.value | default: 0 | money_without_currency | replace: ',', ''
-                    assign max_value = filter.max_value.value | default: filter.range_max | money_without_currency | replace: ',', ''
-                    assign range_max = filter.range_max | money_without_currency | replace: ',', ''
-                  %}
+  {% liquid
+    assign min_value = filter.min_value.value | default: 0 | money_without_currency | replace: ',', ''
+    assign max_value = filter.max_value.value | default: filter.range_max | money_without_currency | replace: ',', ''
+    assign range_max = filter.range_max | money_without_currency | replace: ',', ''
+  %}
 
-                  <div class="price-range-box">
+  <div class="price-range-box">
 
-                      <!-- Hidden Shopify inputs (IMPORTANT) -->
-                    <input
-                      type="hidden"
-                      name="{{ filter.min_value.param_name }}"
-                      id="PriceMinInput"
-                      value="{{ min_value }}">
+    <!-- Hidden Shopify inputs (IMPORTANT) -->
+    <input type="hidden"
+      name="{{ filter.min_value.param_name }}"
+      id="PriceMinInput"
+      value="{{ min_value }}">
 
-                    <input
-                      type="hidden"
-                      name="{{ filter.max_value.param_name }}"
-                      id="PriceMaxInput"
-                      value="{{ max_value }}">
+    <input type="hidden"
+      name="{{ filter.max_value.param_name }}"
+      id="PriceMaxInput"
+      value="{{ max_value }}">
 
-                    <!-- SLIDERS -->
-                    <div class="range-slider">
-                      <div class="slider-track"></div>
-                      <div class="slider-fill" id="SliderFill"></div>
+    <!-- SLIDERS -->
+    <div class="range-slider">
+  <div class="slider-track"></div>
+  <div class="slider-fill" id="SliderFill"></div>
 
-                      <input
-                        type="range"
-                        min="0"
-                        max="{{ range_max }}"
-                        value="{{ min_value }}"
-                        id="MinRange">
+  <input type="range"
+    min="0"
+    max="{{ range_max }}"
+    value="{{ min_value }}"
+    id="MinRange">
 
-                      <input
-                        type="range"
-                        min="0"
-                        max="{{ range_max }}"
-                        value="{{ max_value }}"
-                        id="MaxRange">
-                    </div>
+  <input type="range"
+    min="0"
+    max="{{ range_max }}"
+    value="{{ max_value }}"
+    id="MaxRange">
+</div>
 
 
-                    <!-- VALUES -->
-                    <div class="price-values">
-                      <div class="MinPriceDiv">
-                        <span id="MinPriceText">
-                          $ {{ min_value }}</span>
-                      </div>
+    <!-- VALUES -->
+    <div class="price-values">
+      <div class="MinPriceDiv"><span id="MinPriceText"> $ {{ min_value }}</span></div>
+      
+      <span class="span-text">to</span>
+      <div class="MaxPriceDiv"><span id="MaxPriceText"> $ {{ max_value }}</span></div>
+      
+    </div>
 
-                      <span class="span-text">to</span>
-                      <div class="MaxPriceDiv">
-                        <span id="MaxPriceText">
-                          $ {{ max_value }}</span>
-                      </div>
+  </div>
 
-                    </div>
 
-                  </div>
 
 
               {% endcase %}
@@ -345,7 +337,7 @@
   });
 </script>
 
-{% comment %}        fiter show more button script           {% endcomment %}
+          {% comment %}        fiter show more button script           {% endcomment %}
 
 
 <script>
@@ -377,33 +369,41 @@
   const minText = document.getElementById('MinPriceText');
   const maxText = document.getElementById('MaxPriceText');
   const sliderFill = document.getElementById('SliderFill');
-  
+
   const maxValue = parseInt(minRange.max);
-  
+
   function syncPrice() {
     let min = parseInt(minRange.value);
     let max = parseInt(maxRange.value);
-  
+
     if (min > max) [min, max] = [max, min];
-  
+
     minInput.value = min;
     maxInput.value = max;
-  
-    minText.textContent = `$ ${min}`;
-    maxText.textContent = `$ ${max}`;
-  
+
+minText.textContent = `$ ${min.toFixed(2)}`;
+maxText.textContent = `$ ${max.toFixed(2)}`;
+
+
     const minPercent = (min / maxValue) * 100;
     const maxPercent = (max / maxValue) * 100;
-  
+
     sliderFill.style.left = minPercent + '%';
     sliderFill.style.width = (maxPercent - minPercent) + '%';
   }
-  
+
   minRange.addEventListener('input', syncPrice);
   maxRange.addEventListener('input', syncPrice);
-  
+
   syncPrice();
 </script>
+
+
+
+
+
+
+
 
 
 <style>
@@ -448,7 +448,7 @@
     box-shadow: 0 0 1px 0
   }
 
-  .filter-item summary::-webkit-details-marker {
+.filter-item summary::-webkit-details-marker {
     display: none;
   }
   .filter-item summary::marker {
@@ -550,8 +550,8 @@
   pointer-events: auto;
   width: 16px;
   height: 16px;
-  margin-top: 15px;
-  background: #D39D4E;
+  margin-top:15px;
+  background:#D39D4E;
   border-radius: 50%;
   cursor: pointer;
   border: none;
@@ -569,24 +569,24 @@
   display: flex;
   justify-content: center;
 }
-.MinPriceDiv {
-  border: 1px solid #ddd;
-  border-radius: 2px;
-  padding: 3px 18px;
-  font-size: 11px;
-  font-weight: 700;
+.MinPriceDiv{
+border:1px solid #ddd;
+border-radius:2px;
+padding:3px 18px;
+font-size:11px;
+font-weight:700;
 }
-.MaxPriceDiv {
-  border: 1px solid #ddd;
-  padding: 3px 18px;
-  border-radius: 2px;
-  font-size: 11px;
-  font-weight: 700;
+.MaxPriceDiv{
+border:1px solid #ddd;
+padding:3px 18px;
+border-radius:2px;
+font-size:11px;
+font-weight:700;
 }
-.span-text {
+.span-text{
   font-size: 13px;
   font-weight: 600;
-  padding: 3px 6px;
+padding:3px 6px;
   font-family: {{ section.settings.font_family }};
 }
 
@@ -725,7 +725,7 @@
   top: 120%;
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
   min-width: 220px;
   overflow: hidden;
   display: none;
@@ -754,6 +754,7 @@
   font-family: {{ section.settings.font_family }};
   font-weight: 500;
 }
+
 
 
 @media (max-width: 767px) {
@@ -787,7 +788,7 @@
     top: 120%;
     background: #fff;
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
     min-width: 220px;
     overflow: hidden;
     display: none;
@@ -797,7 +798,7 @@
     padding: 10px 18px;
     font-size: 12px;
   }
-  .sort-option.active {
+ .sort-option.active {
     background: #e5e7eb;
   }
 }
@@ -859,7 +860,7 @@
     height: 100vh;
     background: #fff;
     z-index: 999;
-    padding-top: 20px;
+    padding-top:20px;
     transform: translateY(100%);
     transition: transform 0.35s ease;
     overflow-y: auto;
@@ -885,7 +886,7 @@
     inset: auto 0 0 0;
     width: 100%;
     height: 85vh;
-    padding-top: 20px;
+    padding-top:20px;
     transform: translateY(100%);
   }
   .filters-column.active {

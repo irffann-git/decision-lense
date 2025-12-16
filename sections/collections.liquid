@@ -105,16 +105,66 @@
 
 
                 {% when 'price_range' %}
-                  <div class="price-box">
+
+                  {% liquid
+                    assign min_value = filter.min_value.value | default: 0 | money_without_currency | replace: ',', ''
+                    assign max_value = filter.max_value.value | default: filter.range_max | money_without_currency | replace: ',', ''
+                    assign range_max = filter.range_max | money_without_currency | replace: ',', ''
+                  %}
+
+                  <div class="price-range-box">
+
+                      <!-- Hidden Shopify inputs (IMPORTANT) -->
                     <input
-                      type="number"
+                      type="hidden"
                       name="{{ filter.min_value.param_name }}"
-                      placeholder="Min">
+                      id="PriceMinInput"
+                      value="{{ min_value }}">
+
                     <input
-                      type="number"
+                      type="hidden"
                       name="{{ filter.max_value.param_name }}"
-                      placeholder="Max">
+                      id="PriceMaxInput"
+                      value="{{ max_value }}">
+
+                    <!-- SLIDERS -->
+                    <div class="range-slider">
+                      <div class="slider-track"></div>
+                      <div class="slider-fill" id="SliderFill"></div>
+
+                      <input
+                        type="range"
+                        min="0"
+                        max="{{ range_max }}"
+                        value="{{ min_value }}"
+                        id="MinRange">
+
+                      <input
+                        type="range"
+                        min="0"
+                        max="{{ range_max }}"
+                        value="{{ max_value }}"
+                        id="MaxRange">
+                    </div>
+
+
+                    <!-- VALUES -->
+                    <div class="price-values">
+                      <div class="MinPriceDiv">
+                        <span id="MinPriceText">
+                          $ {{ min_value }}</span>
+                      </div>
+
+                      <span class="span-text">to</span>
+                      <div class="MaxPriceDiv">
+                        <span id="MaxPriceText">
+                          $ {{ max_value }}</span>
+                      </div>
+
+                    </div>
+
                   </div>
+
 
               {% endcase %}
             </details>
@@ -295,7 +345,7 @@
   });
 </script>
 
-          {% comment %}        fiter show more button script           {% endcomment %}
+{% comment %}        fiter show more button script           {% endcomment %}
 
 
 <script>
@@ -319,8 +369,41 @@
   });
 </script>
 
-
-
+<script>
+  const minRange = document.getElementById('MinRange');
+  const maxRange = document.getElementById('MaxRange');
+  const minInput = document.getElementById('PriceMinInput');
+  const maxInput = document.getElementById('PriceMaxInput');
+  const minText = document.getElementById('MinPriceText');
+  const maxText = document.getElementById('MaxPriceText');
+  const sliderFill = document.getElementById('SliderFill');
+  
+  const maxValue = parseInt(minRange.max);
+  
+  function syncPrice() {
+    let min = parseInt(minRange.value);
+    let max = parseInt(maxRange.value);
+  
+    if (min > max) [min, max] = [max, min];
+  
+    minInput.value = min;
+    maxInput.value = max;
+  
+    minText.textContent = `$ ${min}`;
+    maxText.textContent = `$ ${max}`;
+  
+    const minPercent = (min / maxValue) * 100;
+    const maxPercent = (max / maxValue) * 100;
+  
+    sliderFill.style.left = minPercent + '%';
+    sliderFill.style.width = (maxPercent - minPercent) + '%';
+  }
+  
+  minRange.addEventListener('input', syncPrice);
+  maxRange.addEventListener('input', syncPrice);
+  
+  syncPrice();
+</script>
 
 
 <style>
@@ -353,7 +436,7 @@
   .filters-column {
     background: #fff;
     padding: 0 15px 15px;
-    border-radius: 16px;
+    border-radius: 5px;
     position: sticky;
     top: 80px;
   }
@@ -365,7 +448,7 @@
     box-shadow: 0 0 1px 0
   }
 
-.filter-item summary::-webkit-details-marker {
+  .filter-item summary::-webkit-details-marker {
     display: none;
   }
   .filter-item summary::marker {
@@ -419,6 +502,94 @@
 .show-more-btn:hover {
   text-decoration: underline;
 }
+.price-range-box {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.range-slider {
+  position: relative;
+  height: 22px;
+  margin: 10px 0;
+}
+/* grey background track */
+.slider-track {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 4px;
+  width: 100%;
+  background: #e5e7eb;
+  border-radius: 999px;
+}
+
+/* gold active range */
+.slider-fill {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 4px;
+  background: #D39D4E;
+  border-radius: 999px;
+}
+
+.range-slider input[type=range] {
+  position: absolute;
+  width: 100%;
+  appearance: none;
+  background: none;
+  pointer-events: none;
+  height: 4px;
+  z-index: 2;
+}
+
+
+.range-slider input::-webkit-slider-thumb {
+  appearance: none;
+  pointer-events: auto;
+  width: 16px;
+  height: 16px;
+  margin-top: 15px;
+  background: #D39D4E;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  z-index: 3;
+}
+.range-slider input::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #D39D4E;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+.price-values {
+  display: flex;
+  justify-content: center;
+}
+.MinPriceDiv {
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  padding: 3px 18px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.MaxPriceDiv {
+  border: 1px solid #ddd;
+  padding: 3px 18px;
+  border-radius: 2px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.span-text {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 3px 6px;
+  font-family: {{ section.settings.font_family }};
+}
+
 .frame-shape-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -554,7 +725,7 @@
   top: 120%;
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   min-width: 220px;
   overflow: hidden;
   display: none;
@@ -583,7 +754,6 @@
   font-family: {{ section.settings.font_family }};
   font-weight: 500;
 }
-
 
 
 @media (max-width: 767px) {
@@ -617,7 +787,7 @@
     top: 120%;
     background: #fff;
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     min-width: 220px;
     overflow: hidden;
     display: none;
@@ -627,7 +797,7 @@
     padding: 10px 18px;
     font-size: 12px;
   }
- .sort-option.active {
+  .sort-option.active {
     background: #e5e7eb;
   }
 }
@@ -683,22 +853,21 @@
   }
   .filters-column {
     position: fixed;
-    top: 0;
-    right: 0;
     width: 360px;
+    inset: auto 0 0 0;
     max-width: 90%;
     height: 100vh;
     background: #fff;
     z-index: 999;
-    transform: translateX(100%);
+    padding-top: 20px;
+    transform: translateY(100%);
     transition: transform 0.35s ease;
-    border-radius: 20px 0 0 20px;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
 
   .filters-column.active {
-    transform: translateX(0);
+    transform: translateY(0);
   }
 }
 
@@ -716,8 +885,8 @@
     inset: auto 0 0 0;
     width: 100%;
     height: 85vh;
+    padding-top: 20px;
     transform: translateY(100%);
-    border-radius: 24px 24px 0 0
   }
   .filters-column.active {
     transform: translateY(0)

@@ -4,12 +4,23 @@
 
     <!-- NEW ARRIVAL IMAGE LEFT SIDE -->
     <div class="flex flex-col lg:justify-end lg:h-100 w-32 pb-6 mt-0 lg:mt-10">
-      <img
-        src="{{ 'new arrival.png' | asset_url }}"
-        width="300"
-        height="200"
-        alt="New Arrival"
-        class="w-full h-auto">
+      {% if section.settings.new_arrivel_img != blank %}
+        <img
+          src="{{ section.settings.new_arrivel_img | image_url: width: 700 }}"
+          width="{{ section.settings.new_arrivel_img.width }}"
+          height="{{ section.settings.new_arrivel_img.height }}"
+          class="w-full h-auto"
+          alt="New Arrival">
+
+      {% else %}
+        <img
+          src="{{ 'new-arrival.png' | asset_url }}"
+          width="300"
+          height="200"
+          alt="New Arrival"
+          class="w-full h-auto">
+      {% endif %}
+
 
     </div>
 
@@ -60,14 +71,9 @@
       {% endif %}
 
       {% if section.settings.heading != blank %}
-<h2 class=" leading-tight"
-    style="font-size: {{ section.settings.heading_font_size }}px; font-family:{{ section.settings.main_text_font_style }}">
-  {{ section.settings.heading | newline_to_br }}
-</h2>
-
-
-
-
+        <h2 class=" leading-tight" style="font-size: {{ section.settings.heading_font_size }}px; font-family:{{ section.settings.main_text_font_style }}">
+          {{ section.settings.heading | newline_to_br }}
+        </h2>
 
 
       {% endif %}
@@ -76,26 +82,25 @@
         <a href="{{ section.settings.button_link }}" class="group flex items-center gap-4 justify-center lg:justify-start font-semibold md:items-center tracking-wide">
           <span class="text-white uppercase text-lg">{{ section.settings.button_label }}</span>
 
-<span 
-  class="w-[50px] h-[50px] rounded-full flex items-center justify-center 
+          <span
+            class="w-[50px] h-[50px] rounded-full flex items-center justify-center 
          transition-all duration-300 transform"
-  style="
+            style="
     background-color: {{ section.settings.button_bg_color }};
     color: {{ section.settings.button_icon_color }};
   "
-  onmouseover="
+            onmouseover="
     this.style.backgroundColor='{{ section.settings.button_hover_color }}';
     this.style.color='{{ section.settings.button_icon_hover_color }}';
     this.style.transform='translateX(8px)';
   "
-  onmouseout="
+            onmouseout="
     this.style.backgroundColor='{{ section.settings.button_bg_color }}';
     this.style.color='{{ section.settings.button_icon_color }}';
     this.style.transform='translateX(0px)';
-  "
->
-  {% render 'icon-arrow-right' %}
-</span>
+  ">
+            {% render 'icon-arrow-right' %}
+          </span>
 
 
         </a>
@@ -111,7 +116,7 @@
         height="{{ section.settings.plant_image.height }}"
         alt="Plant Illustration"
         class="hidden lg:block absolute right-0 bottom-0 pb-6 pe-6 max-w-[480px] pointer-events-none opacity-90">
-        
+
     {% endif %}
 
   </div>
@@ -124,14 +129,15 @@
       height="{{ section.settings.plant_image.height }}"
       alt="Plant Illustration"
       class="block lg:hidden mx-auto w-full max-w-[350px] opacity-90">
-  {% endif %}     
+  {% endif %}
 </section>
 
 
 <style>
-.font-playfair {
-  font-family: "Playfair Display", serif;
-}
+  .font-playfair {
+    font-family: "Playfair Display"
+    , serif;
+  }
 
 </style>
 
@@ -154,10 +160,14 @@
       },
       {
         "type": "image_picker",
-        "id": "plant_image",
-        "label": "Plant Illustration Image"
+        "id": "new_arrivel_img",
+        "label": "new arrivel image"
       },
       {
+        "type": "image_picker",
+        "id": "plant_image",
+        "label": "Plant Illustration Image"
+      }, {
         "type": "image_picker",
         "id": "main_image_1",
         "label": "Product Image 1"
@@ -174,44 +184,67 @@
         "id": "small_text",
         "label": "Small Subtitle",
         "default": "Standard collection for urban lifestyle."
-      },
-{
-  "type": "select",
-  "id": "small_text_font_style",
-  "label": "Font Style",
-  "default": "font-normal",
-  "options": [
-    { "value": "font-normal", "label": "Normal" },
-    { "value": "font-bold", "label": "Bold" },
-    { "value": "font-playfair", "label": "Playfair Display" },
-    { "value": "font-poppins", "label": "Poppins" },
-    { "value": "font-montserrat", "label": "Montserrat" }
-  ]
-},
-
- 
-   {
+      }, {
+        "type": "select",
+        "id": "small_text_font_style",
+        "label": "Font Style",
+        "default": "font-normal",
+        "options": [
+          {
+            "value": "font-normal",
+            "label": "Normal"
+          },
+          {
+            "value": "font-bold",
+            "label": "Bold"
+          },
+          {
+            "value": "font-playfair",
+            "label": "Playfair Display"
+          },
+          {
+            "value": "font-poppins",
+            "label": "Poppins"
+          }, {
+            "value": "font-montserrat",
+            "label": "Montserrat"
+          }
+        ]
+      }, {
         "type": "text",
         "id": "heading",
         "label": "Main Heading",
         "default": "Chiffon top stylish specs in 2023"
-      },
-            {
-  "type": "select",
-  "id": "main_text_font_style",
-  "label": "Font Family",
-  "options": [
-    { "value": "Outfit", "label": "Outfit" },
-    { "value": "Poppins", "label": "Poppins" },
-    { "value": "Inter", "label": "Inter" },
-    { "value": "Roboto", "label": "Roboto" },
-    { "value": "Montserrat", "label": "Montserrat" },
-    { "value": "Lato", "label": "Lato" }
-  ],
-  "default": "Outfit"
-},
-      
-      {
+      }, {
+        "type": "select",
+        "id": "main_text_font_style",
+        "label": "Font Family",
+        "options": [
+          {
+            "value": "Outfit",
+            "label": "Outfit"
+          },
+          {
+            "value": "Poppins",
+            "label": "Poppins"
+          },
+          {
+            "value": "Inter",
+            "label": "Inter"
+          },
+          {
+            "value": "Roboto",
+            "label": "Roboto"
+          }, {
+            "value": "Montserrat",
+            "label": "Montserrat"
+          }, {
+            "value": "Lato",
+            "label": "Lato"
+          }
+        ],
+        "default": "Outfit"
+      }, {
         "type": "range",
         "id": "heading_font_size",
         "label": "Heading Font Size",
@@ -225,34 +258,27 @@
         "id": "button_label",
         "label": "Button Text",
         "default": "SHOP NOW"
-      },
-{
-  "type": "color",
-  "id": "button_bg_color",
-  "label": "Button Background Color",
-  "default": "#F5B32C" 
-},
-{
-  "type": "color",
-  "id": "button_hover_color",
-  "label": "Button Hover Color",
-  "default": "#000000"
-},
-{
-  "type": "color",
-  "id": "button_icon_color",
-  "label": "Icon Color",
-  "default": "#1F2937"
-},
-{
-  "type": "color",
-  "id": "button_icon_hover_color",
-  "label": "Icon Hover Color",
-  "default": "#F5B32C"
-}
-,
-      
-      {
+      }, {
+        "type": "color",
+        "id": "button_bg_color",
+        "label": "Button Background Color",
+        "default": "#F5B32C"
+      }, {
+        "type": "color",
+        "id": "button_hover_color",
+        "label": "Button Hover Color",
+        "default": "#000000"
+      }, {
+        "type": "color",
+        "id": "button_icon_color",
+        "label": "Icon Color",
+        "default": "#1F2937"
+      }, {
+        "type": "color",
+        "id": "button_icon_hover_color",
+        "label": "Icon Hover Color",
+        "default": "#F5B32C"
+      }, {
         "type": "url",
         "id": "button_link",
         "label": "Button Link"

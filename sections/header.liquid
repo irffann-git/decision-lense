@@ -13,6 +13,11 @@
   x-cloak
   style="background-color: {{ section.settings.bg_color }};"
 >
+  <div
+  x-show="searchBarOpen"
+  x-transition.opacity
+  class="header-blur-overlay"
+></div>
 
   <!-- MAIN HEADER -->
   <div class="max-w-7xl mx-auto px-1 sm:px-6">
@@ -134,34 +139,55 @@
   </div>
 
 <!-- SEARCH BAR -->
-<div x-show="searchBarOpen" class="w-full absolute top-0 left-0 bg-white border z-50">
-    <!-- Close Button -->
-    <button
-      type="button"
-      x-on:click="searchBarOpen = false"
-      class="absolute top-4 right-4 text-red-500 hover:text-gray-700 focus:outline-none">
-      {% render 'icon-close' %}
-    </button>
+<div
+  x-show="searchBarOpen"
+  x-transition:enter="search-slide-enter"
+  x-transition:enter-start="search-slide-enter-start"
+  x-transition:enter-end="search-slide-enter-end"
+  x-transition:leave="search-slide-leave"
+  x-transition:leave-start="search-slide-leave-start"
+  x-transition:leave-end="search-slide-leave-end"
+  class="header-search-slide"
+>
 
-    <!-- Search Form -->
-    <div class="h-40 flex justify-center items-center">
-      <form
-        action="{{ routes.search_url }}"
-        method="get"
-        class="w-full max-w-md px-6">
-        <div class="relative w-full text-gray-500">
-          <input
-            type="search"
-            name="q"
-            placeholder="Search sunglasses,eyelense......"
-            class="w-full h-10 px-4 pr-12 rounded-full border border-yellow-600 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-yellow-600">
-          <button type="submit" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700">
-            {% render 'icon-search' %}
-          </button>
-        </div>
-      </form>
+  <!-- Close Button -->
+  <button
+    type="button"
+    x-on:click="searchBarOpen = false"
+    class="search-close-btn">
+    {% render 'icon-close' %}
+  </button>
+
+  <!-- Search Form -->
+  <form
+    action="{{ routes.search_url }}"
+    method="get"
+    class="search-slide-form">
+
+    <div class="search-slide-input-wrap">
+
+      <input
+        type="search"
+        name="q"
+        placeholder="Search sunglasses, eyeglasses..."
+        autocomplete="off"
+        class="header-search-input">
+
+      <button type="submit" class="search-submit-btn">
+        {% render 'icon-search' %}
+      </button>
+
+      <!-- LIVE SUGGESTIONS -->
+      <div
+        id="header-search-suggestions"
+        class="header-search-suggestions hidden">
+      </div>
+
     </div>
-  </div>
+  </form>
+</div>
+
+
 
 
 
@@ -253,6 +279,17 @@
 </div>
 
 <style>
+  /* ===== HEADER BLUR OVERLAY ===== */
+
+.header-blur-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.4); /* light glass */
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 55; /* below search, above header */
+}
+
 
   .wishlist-count-badge {
     position: absolute;
@@ -276,6 +313,274 @@
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     background: white;
   }
+
+  /* ===== HEADER LIVE SEARCH ===== */
+/* ===== SLIDING HEADER SEARCH ===== */
+
+.header-search-slide {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 64px;               /* header height */
+  width: 420px;
+  max-width: 90%;
+  background: transparent;   /* bg venda */
+  z-index: 60;
+}
+
+/* Alpine transitions */
+.search-slide-enter {
+  transition: transform 0.35s ease;
+}
+.search-slide-enter-start {
+  transform: translateX(100%);
+}
+.search-slide-enter-end {
+  transform: translateX(0);
+}
+
+.search-slide-leave {
+  transition: transform 0.3s ease;
+}
+.search-slide-leave-start {
+  transform: translateX(0);
+}
+.search-slide-leave-end {
+  transform: translateX(100%);
+}
+
+/* FORM */
+.search-slide-form {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-right: 44px;
+}
+
+/* INPUT WRAP */
+.search-slide-input-wrap {
+  position: relative;
+  width: 100%;
+}
+
+/* INPUT */
+.header-search-input {
+  width: 100%;
+  height: 40px;
+  padding: 0 44px 0 16px;
+  border-radius: 999px;
+  border: 2px solid #ca8a04;
+  font-size: 14px;
+  outline: none;
+  background: #fff;
+}
+
+/* SEARCH ICON */
+.search-submit-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* CLOSE BUTTON */
+.search-close-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #dc2626;
+}
+
+/* ================= HEADER SEARCH (FINAL) ================= */
+
+.header-search-slide {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 520px;
+  max-width: 92%;
+  height: 56px;
+  transform: translate(-50%, -50%);
+  z-index: 60;
+}
+
+/* slide animation */
+.search-slide-enter {
+  transition: transform 0.4s ease;
+}
+.search-slide-enter-start {
+  transform: translate(100%, -50%);
+}
+.search-slide-enter-end {
+  transform: translate(-50%, -50%);
+}
+.search-slide-leave {
+  transition: transform 0.3s ease;
+}
+.search-slide-leave-start {
+  transform: translate(-50%, -50%);
+}
+.search-slide-leave-end {
+  transform: translate(100%, -50%);
+}
+
+/* form */
+.search-slide-form {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* input wrapper */
+.search-slide-input-wrap {
+  position: relative;
+  width: 100%;
+}
+
+/* input */
+.header-search-input {
+  width: 100%;
+  height: 48px;
+  padding: 0 52px 0 20px;
+  border-radius: 999px;
+  border: 2px solid #ca8a04;
+  font-size: 16px;
+  background: #fff;
+  outline: none;
+}
+
+/* submit icon */
+.search-submit-btn {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* close button (desktop) */
+.search-close-btn {
+  position: absolute;
+  right: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #dc2626;
+}
+
+/* ================= SUGGESTIONS ================= */
+
+.header-search-suggestions {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+  overflow: hidden;
+  z-index: 70;
+}
+
+.header-search-suggestions.hidden {
+  display: none;
+}
+
+.header-search-suggestions a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: #111;
+  font-size: 14px;
+}
+
+.header-search-suggestions a:hover {
+  background: #f9fafb;
+}
+
+.header-search-suggestions img {
+  width: 38px;
+  height: 38px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.header-suggest-title {
+  font-weight: 600;
+}
+
+.header-suggest-type {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.header-collection-placeholder {
+  width: 38px;
+  height: 38px;
+  background: #f3f4f6;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ================= MOBILE (FINAL ALIGNMENT) ================= */
+@media (max-width: 768px) {
+
+  .header-search-slide {
+    width: 92%;
+  }
+
+  .search-slide-form {
+    width: 100%;
+  }
+
+  .search-slide-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+  }
+
+  /* INPUT */
+  .header-search-input {
+    flex: 1;
+    height: 48px;         /* remove icon padding */
+    box-sizing: border-box;
+  }
+
+  /* CLOSE BUTTON */
+  .search-close-btn {
+    position: absolute;
+    right:2px;
+    margin-top:-25px;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    transform: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+
+
+
 </style>
 
 <script>
@@ -291,6 +596,80 @@
       }
     });
   });
+</script>
+
+
+<script>
+const headerInput = document.querySelector('.header-search-input');
+const headerBox = document.getElementById('header-search-suggestions');
+let headerController;
+
+if (headerInput) {
+  headerInput.addEventListener('input', function () {
+    const query = this.value.trim();
+
+    if (query.length < 2) {
+      headerBox.classList.add('hidden');
+      headerBox.innerHTML = '';
+      return;
+    }
+
+    if (headerController) headerController.abort();
+    headerController = new AbortController();
+
+    fetch(`/search/suggest.json?q=${encodeURIComponent(query)}&resources[type]=product,collection&resources[limit]=6`, {
+      signal: headerController.signal
+    })
+    .then(res => res.json())
+    .then(data => {
+      let html = '';
+
+      /* PRODUCTS */
+      data.resources.results.products.forEach(p => {
+        html += `
+          <a href="${p.url}">
+            <img src="${p.image}" alt="${p.title}">
+            <div>
+              <div class="header-suggest-title">${p.title}</div>
+              <div class="header-suggest-type">Product</div>
+            </div>
+          </a>`;
+      });
+
+      /* COLLECTIONS (NO IMAGE → PLACEHOLDER) */
+      data.resources.results.collections.forEach(c => {
+        html += `
+          <a href="${c.url}">
+            <div class="header-collection-placeholder">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="3" width="7" height="7" stroke="currentColor" stroke-width="1.5"/>
+                <rect x="14" y="3" width="7" height="7" stroke="currentColor" stroke-width="1.5"/>
+                <rect x="3" y="14" width="7" height="7" stroke="currentColor" stroke-width="1.5"/>
+                <rect x="14" y="14" width="7" height="7" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <div>
+              <div class="header-suggest-title">${c.title}</div>
+              <div class="header-suggest-type">Collection</div>
+            </div>
+          </a>`;
+      });
+
+      if (!html) {
+        html = `<div style="padding:14px;color:#6b7280;">No results found</div>`;
+      }
+
+      headerBox.innerHTML = html;
+      headerBox.classList.remove('hidden');
+    });
+  });
+
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.relative')) {
+      headerBox.classList.add('hidden');
+    }
+  });
+}
 </script>
 
 {% schema %}

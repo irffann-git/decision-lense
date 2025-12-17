@@ -1,119 +1,284 @@
-<section class="page-width py-10">
+<section class="search-page">
+
   {% paginate search.results by 8 %}
 
-    <!-- 🔍 Search Bar -->
-    <!-- 🔍 Search Bar -->
-    <div class="search-bar-wrapper">
-      <form
-        action="{{ routes.search_url }}"
-        method="get"
-        class="search-bar">
-        <input
-          type="search"
-          name="q"
-          placeholder="Search products..."
-          value="{{ search.terms | escape }}"
-          class="search-input">
-        <button type="submit" class="search-button">Search</button>
-      </form>
-    </div>
+  <!-- SEARCH HERO -->
+  <div class="search-hero">
+    <h1 class="search-title">Search</h1>
+    <p class="search-subtitle">
+      Find products and collections quickly
+    </p>
 
+    <form action="{{ routes.search_url }}" method="get" class="search-bar">
+      <input
+        type="search"
+        name="q"
+        placeholder="Search products or collections..."
+        value="{{ search.terms | escape }}"
+        class="search-input"
+        autocomplete="off">
 
-    {% if search.performed %}
-      {% if search.results.size > 0 %}
+      <button type="submit" class="search-button">Search</button>
 
-        <p class="text-center text-gray-600 mb-6 text-lg">
-          Showing
-          <span class="font-bold">{{ search.results.size }}</span>
-          results for
-          <span class="font-extrabold text-black">"{{ search.terms | escape }}"</span>
+      <!-- LIVE SUGGESTIONS -->
+      <div id="search-suggestions" class="search-suggestions hidden"></div>
+    </form>
+  </div>
+
+  <!-- SEARCH RESULTS -->
+  {% if search.performed %}
+
+    {% if search.results.size > 0 %}
+
+      <div class="search-results-header">
+        <span>
+          {{ search.results_count }} results for
+          <strong>"{{ search.terms | escape }}"</strong>
+        </span>
+      </div>
+
+      <div class="search-grid">
+        {% for item in search.results %}
+          {% if item.object_type == 'product' %}
+            {% render 'product-card', product_product: item %}
+          {% endif %}
+        {% endfor %}
+      </div>
+
+    {% else %}
+
+      <!-- EMPTY STATE -->
+      <div class="search-empty">
+        <h2>No results found</h2>
+        <p>
+          We couldn’t find anything for
+          <strong>"{{ search.terms | escape }}"</strong>
         </p>
+        <a href="{{ routes.root_url }}" class="browse-btn">
+          Go to Home Page
+        </a>
+      </div>
 
-        <div class="px-9 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {% for item in search.results %}
-            {% if item.object_type == 'product' %}
-              {% render 'product-card'
-                , product_product: item %}
-            {% endif %}
-          {% endfor %}
-        </div>
-
-      {% else %}
-        <div class="text-center py-20">
-          <h2 class="text-2xl font-semibold mb-4">No results found !</h2>
-          <p class="text-gray-600 mb-4">
-            No products match "<span class="font-bold">{{ search.terms | escape }}</span>"
-          </p>
-          <a href="{{ routes.all_products_collection_url }}" class="px-8 py-3 bg-yellow-500 text-black font-semibold rounded hover:bg-black hover:text-yellow-500 transition">
-            Browse Products
-          </a>
-        </div>
-      {% endif %}
     {% endif %}
+  {% endif %}
 
-    <!-- Pagination -->
-    <div class="mt-12">
-      {% render 'pagination'
-        , pagination: paginate %}
+  <!-- PAGINATION -->
+  {% if paginate.pages > 1 %}
+    <div class="search-pagination">
+      {% render 'pagination', pagination: paginate %}
     </div>
+  {% endif %}
 
   {% endpaginate %}
 </section>
+
+<!-- ================= CSS ================= -->
+
 <style>
-  .search-bar-wrapper {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 2.5rem;
+.search-page {
+  padding: 60px 20px;
+}
+
+/* HERO */
+.search-hero {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 50px;
+}
+
+.search-title {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.search-subtitle {
+  font-size: 16px;
+  color: #6b7280;
+  margin-bottom: 28px;
+}
+
+/* SEARCH BAR */
+.search-bar {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.search-input {
+  width: 100%;
+  padding: 16px 130px 16px 26px;
+  font-size: 18px;
+  border-radius: 999px;
+  border: 2px solid #EAB308;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #d4a017;
+  box-shadow: 0 0 0 4px rgba(234,179,8,0.25);
+}
+
+.search-button {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  padding: 12px 28px;
+  border-radius: 999px;
+  background: #EAB308;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+/* RESULTS HEADER */
+.search-results-header {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 15px;
+  color: #374151;
+}
+
+/* GRID */
+.search-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 10px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 26px;
+}
+
+/* EMPTY STATE */
+.search-empty {
+  text-align: center;
+  padding: 100px 20px;
+}
+
+.search-empty h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.search-empty p {
+  color: #6b7280;
+  margin-bottom: 24px;
+}
+
+/* BUTTON */
+.browse-btn {
+  display: inline-block;
+  padding: 12px 32px;
+  background: #EAB308;
+  color: #000;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* PAGINATION */
+.search-pagination {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .search-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .search-title {
+    font-size: 28px;
   }
 
-  .search-bar {
-    position: relative;
-    width: 100%;
-    max-width: 600px;
+  .search-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
-
-  .search-input {
-    width: 100%;
-    padding: 14px 120px 14px 22px;
-    font-size: 18px;
-    border: 2px solid #EAB308;
-    /* yellow */
-    border-radius: 50px;
-    outline: none;
-    color: #333;
-  }
-
-  .search-input:focus {
-    border-color: #f5b800;
-    box-shadow: 0 0 6px rgba(245, 184, 0, 0.6);
-  }
-
-  .search-button {
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    padding: 12px 24px;
-    font-size: 18px;
-    font-weight: 600;
-    background: #EAB308;
-    /* yellow */
-    color: #000;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-
-  .search-button:hover {
-    background: #000000;
-    color: #EAB308;
-  }
-
+}
 </style>
 
-{% schema %}
-  {
-    "name": "Main Search",
-    "settings": []
+<!-- ================= JS ================= -->
+<script>
+const searchInput = document.querySelector('.search-input');
+const suggestionBox = document.getElementById('search-suggestions');
+let controller;
+
+searchInput.addEventListener('input', function () {
+  const query = this.value.trim();
+
+  if (query.length < 2) {
+    suggestionBox.classList.add('hidden');
+    suggestionBox.innerHTML = '';
+    return;
   }
+
+  if (controller) controller.abort();
+  controller = new AbortController();
+
+  fetch(`/search/suggest.json?q=${encodeURIComponent(query)}&resources[type]=product,collection&resources[limit]=7`, {
+    signal: controller.signal
+  })
+  .then(res => res.json())
+  .then(data => {
+    let html = '';
+
+    data.resources.results.products.forEach(p => {
+      html += `
+        <a href="${p.url}">
+          <img src="${p.image}" alt="${p.title}">
+          <div>
+            <div class="suggest-title">${p.title}</div>
+            <div class="suggest-type">Product</div>
+          </div>
+        </a>`;
+    });
+
+    data.resources.results.collections.forEach(c => {
+  html += `
+    <a href="${c.url}">
+      <div class="collection-placeholder">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+    <rect x="3" y="3" width="7" height="7" stroke="currentColor" stroke-width="1.5"/>
+    <rect x="14" y="3" width="7" height="7" stroke="currentColor" stroke-width="1.5"/>
+    <rect x="3" y="14" width="7" height="7" stroke="currentColor" stroke-width="1.5"/>
+    <rect x="14" y="14" width="7" height="7" stroke="currentColor" stroke-width="1.5"/>
+  </svg>
+</div>
+
+      <div>
+        <div class="suggest-title">${c.title}</div>
+        <div class="suggest-type">Collection</div>
+      </div>
+    </a>
+  `;
+});
+
+
+
+    if (!html) {
+      html = `<div style="padding:14px;color:#6b7280;">No results found</div>`;
+    }
+
+    suggestionBox.innerHTML = html;
+    suggestionBox.classList.remove('hidden');
+  });
+});
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.search-bar')) {
+    suggestionBox.classList.add('hidden');
+  }
+});
+</script>
+
+{% schema %}
+{
+  "name": "Main Search",
+  "settings": []
+}
 {% endschema %}

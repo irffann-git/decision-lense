@@ -16,7 +16,7 @@
           <a href="{{ article.url }}" class="blog-card-img-wrapper">
             <img
               src="{{ article.image | image_url: width: 800 }}"
-              alt="{{ article.title }}"
+              alt="{{ article.title }}" width="" height=""
               class="blog-card-img">
           </a>
         {% endif %}
@@ -69,8 +69,6 @@
   margin: 0 auto;
   padding: 60px 24px;
 }
-
-/* Title */
 .blog-title {
   text-align: center;
   font-size: 46px;
@@ -81,7 +79,6 @@
   -webkit-text-fill-color: transparent;
 }
 
-/* No posts available */
 .blog-no-posts {
   text-align: center;
   font-size: 20px;
@@ -89,14 +86,13 @@
   margin-top: 40px;
 }
 
-/* Grid */
 .blog-grid {
   display: grid;
   gap: 36px;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 }
 
-/* Card */
+
 .blog-card {
   background: #0E131D;
   border-radius: 12px;
@@ -109,7 +105,6 @@
   box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
 }
 
-/* Image wrapper */
 .blog-card-img-wrapper {
   display: block;
   overflow: hidden;
@@ -124,12 +119,11 @@
   transform: scale(1.07);
 }
 
-/* Body */
+
 .blog-card-body {
   padding: 24px;
 }
 
-/* Title */
 .blog-card-title {
   font-size: 24px;
   font-weight: 700;
@@ -143,14 +137,13 @@
   color: #ffd000;
 }
 
-/* Date */
 .blog-card-meta {
   font-size: 13px;
   color: #9ca3af;
   margin-bottom: 14px;
 }
 
-/* Text */
+
 .blog-card-text {
   font-size: 16px;
   color: #d4d4d4;
@@ -158,7 +151,6 @@
   margin-bottom: 20px;
 }
 
-/* Button */
 .blog-card-btn {
   background: #FFD000;
   padding: 11px 20px;
@@ -173,7 +165,7 @@
   background: #e6bf00;
 }
 
-/* Pagination */
+
 .blog-pagination {
   margin-top: 50px;
   display: flex;

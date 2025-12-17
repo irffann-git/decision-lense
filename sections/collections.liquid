@@ -274,7 +274,9 @@
               {% render 'product-card'
                 , product_product: product %}
             {% else %}
-              <p>No products found</p>
+             <div class="no-products">
+                <p>No products found</p><img src="{{ 'error-404.png' |  asset_url }}" width="" height="" class="w-6 ml-3">
+            </div>
             {% endfor %}
           </div>
 
@@ -439,7 +441,9 @@ maxText.textContent = `$ ${max.toFixed(2)}`;
     border-radius: 5px;
     position: sticky;
     top: 80px;
+    height:100%;
   }
+
   .filter-item {
     border: 1px solid #ddd;
     padding: 10px;
@@ -756,6 +760,21 @@ padding:3px 6px;
 }
 
 
+.no-products {
+  grid-column: 1 / -1;   /* span full grid */
+  min-height: 300px;    /* height for vertical centering */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-products p {
+  font-size: 22px;      /* make text bigger */
+  font-weight: 600;
+  font-family: {{ section.settings.font_family }};
+  color: #111;
+  text-align: center;
+}
 
 @media (max-width: 767px) {
   .frame-shape-grid {

@@ -143,6 +143,21 @@
 
 
 /*! tailwindcss v4.1.17 | MIT License | https://tailwindcss.com */
+html, body {
+  font-family:outfit;
+}
+body,
+button,
+input,
+textarea,
+select,
+a,
+p,
+span,
+li,
+h1, h2, h3, h4, h5, h6 {
+  font-family:outfit;
+}
 
 
 @layer properties;

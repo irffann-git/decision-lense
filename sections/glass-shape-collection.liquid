@@ -1,15 +1,15 @@
-<section class="w-full py-12 mb-8 bg-white">
+<section class="w-full py-8 mb-8 bg-white">
   <div class="max-w-7xl mx-auto px-4">
 
     <!-- Section Heading -->
     {% if section.settings.heading != blank %}
-      <h2 class="text-center text-xl md:text-2xl font-bold mb-10">
+      <h2 class="text-center text-xl md:text-2xl font-bold mb-5" style="font-family:{{ section.settings.font_family }}">
         {{ section.settings.heading }}
       </h2>
     {% endif %}
 
     <!-- Desktop Grid -->
-    <div class="hidden py-4 bg-red-600 md:grid grid-cols-5 gap-6">
+    <div class="hidden py-2 bg-red-600 md:grid grid-cols-5 gap-6">
       {% for block in section.blocks %}
        
         <a href="{{ block.settings.link }}" class="flex flex-col gap-3 group cursor-pointer">
@@ -26,7 +26,7 @@
             {{ 'collection-3' | placeholder_svg_tag: "w-full h-[160px] object-contain bg-[#F6F6F6] rounded" }}
           {% endif %}
 </div>
-          <span class="text-sm py-3 text-gray-700 font-medium text-start group-hover:text-black">
+          <span class="text-md text-black font-medium text-start group-hover:text-black">
             {{ block.settings.title }}
           </span>
 
@@ -58,9 +58,13 @@
               {% endif %}
               </div>
 
-              <span class="text-sm text-gray-700 font-medium text-start py-3 hover:text-black">
-                {{ block.settings.title }}
-              </span>
+              <span
+  class="text-sm text-gray-700 font-medium text-start py-3 hover:text-black">
+
+  {{ block.settings.title }}
+
+</span>
+
 
             </a>
 
@@ -110,7 +114,21 @@
         "id": "heading",
         "label": "Heading",
         "default": "Wear the Shape Trends"
-      }
+      },
+            {
+  "type": "select",
+  "id": "font_family",
+  "label": "Font Family",
+  "options": [
+    { "value": "Outfit", "label": "Outfit" },
+    { "value": "Poppins", "label": "Poppins" },
+    { "value": "Inter", "label": "Inter" },
+    { "value": "Roboto", "label": "Roboto" },
+    { "value": "Montserrat", "label": "Montserrat" },
+    { "value": "Lato", "label": "Lato" }
+  ],
+  "default": "Outfit"
+}
     ],
     "blocks": [
       {
@@ -127,7 +145,8 @@
         "id": "bg_color",
         "label": "baground color",
         "default":"#F5F5F5"
-      }, {
+      },
+       {
             "type": "text",
             "id": "title",
             "label": "Title",

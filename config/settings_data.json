@@ -9,6 +9,7 @@
  */
 {
   "current": {
+    "global_font": "Outfit",
     "sections": {
       "announsment-bar": {
         "type": "announsment-bar",
@@ -38,13 +39,13 @@
           "footer_logo": "shopify://shop_images/logo_3.png",
           "address": "Intelligent Automation Limited\nFirst Floor, 4 Longwalk Road\nStockley Park, Uxbridge\nUB11 1FE",
           "phone": "Tel: +44 (0)20 8432 7749\nFax: +44 (0)20 8432 2751",
-          "facebook_url": "",
-          "linkedin_url": "",
-          "twitter_url": "",
-          "youtube_url": "",
+          "facebook_url": "https://www.facebook.com/",
+          "linkedin_url": "https://www.linkdin.com/",
+          "twitter_url": "https://x.com/",
+          "youtube_url": "https://www.youtube.com/",
           "support_title": "SUPPORT",
           "support_1_text": "Home",
-          "support_1_url": "shopify://collections/frontpage",
+          "support_1_url": "/",
           "support_2_text": "Solutions",
           "support_2_url": "shopify://blogs/news",
           "support_3_text": "About us",

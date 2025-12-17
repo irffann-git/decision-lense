@@ -40,7 +40,7 @@
     <div class="shape-mobile-swiper swiper shapeSwiper mt-4">
       <div class="swiper-wrapper">
         {% for block in section.blocks %}
-          <div class="swiper-slide px-8">
+          <div class="swiper-slide py-8 px-8">
 
             <a href="{{ block.settings.link }}" class="flex flex-col group items-center gap-3">
                <div class="py-20 px-4" style="background-color: {{ block.settings.bg_color }};">
@@ -59,7 +59,7 @@
               </div>
 
               <span
-  class="text-sm text-gray-700 font-medium text-start py-3 hover:text-black">
+  class="text-md text-black font-medium text-start hover:text-black">
 
   {{ block.settings.title }}
 

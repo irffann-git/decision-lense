@@ -7,7 +7,6 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-
 {
   "sections": {
     "hero-banner": {
@@ -308,7 +307,8 @@
         "shape_block_KRVCrM"
       ],
       "settings": {
-        "heading": "Wear the Shape Trends"
+        "heading": "Wear the Shape Trends",
+        "font_family": "Outfit"
       }
     },
     "glass-premium-collections": {
